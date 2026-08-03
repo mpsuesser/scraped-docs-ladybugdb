@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/system-requirements.md
 title: "System requirements"
 description: "Hardware and software requirements for running Ladybug graph database including memory, CPU, and OS specifications."
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 ## CLI, C, and C++

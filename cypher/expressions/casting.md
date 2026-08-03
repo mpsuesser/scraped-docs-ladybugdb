@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/casting.md
 title: "Casting"
 description: "Casting is the act of converting a value that is of one particular data type to another data type."
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 Casting refers to the operation of converting a value that is of one particular data type, to another data type.

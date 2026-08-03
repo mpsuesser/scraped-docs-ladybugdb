@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/copy-from-json.md
 title: "Copy from JSON"
 description: "Bulk import data from JSON files into Ladybug node and relationship tables using the JSON extension."
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 ## JSON files

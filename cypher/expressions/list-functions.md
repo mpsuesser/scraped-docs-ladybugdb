@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/list-functions.md
 title: "List functions"
 description: "List functions are used to create and manipulate lists or arrays."
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 List functions are used to create and manipulate lists and/or arrays. Arrays are a special case of lists,

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/vector.mdx
 title: "Vector search extension"
 description: "Native disk-based HNSW index for fast similarity search over vector embeddings"
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/icebug.md
 title: "Icebug format"
 description: "Read data from Icebug format"
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 [Icebug format](https://github.com/Ladybug-Memory/icebug-format) comes in two flavours: icebug-disk and icebug-memory. Both store graph data in CSR format. You can bring your own node and rel tables(with `from` and `to` columns) and generate icebug files with the [icebug-format](https://pypi.org/project/icebug-format/) tool

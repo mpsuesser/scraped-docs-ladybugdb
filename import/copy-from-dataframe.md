@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/copy-from-dataframe.mdx
 title: "Copy from dataframes"
 description: "Import data directly from Pandas and Polars DataFrames or PyArrow tables into Ladybug using COPY FROM commands."
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 You can copy from Pandas/Polars dataframes or in-memory Arrow tables directly into Ladybug using the `COPY FROM` command.

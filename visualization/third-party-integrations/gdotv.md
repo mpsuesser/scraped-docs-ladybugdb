@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/visualization/third-party-integrations/gdotv.mdx
 title: "Visualize graphs with G.V()"
 description: ""
-access_date: 2026-08-03T18:23:42.333Z
-current_date: 2026-08-03T18:23:42.333Z
+access_date: 2026-08-03T18:55:54.420Z
+current_date: 2026-08-03T18:55:54.420Z
 ---
 
 This page describes how to use [G.V()](https://gdotv.com/), a third-party desktop application that
