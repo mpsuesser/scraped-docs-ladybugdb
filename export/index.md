@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/export/index.mdx
 title: "Export data"
 description: "Export query results from Ladybug to CSV, Parquet, and JSON file formats using the COPY TO command."
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 import { LinkCard } from '@astrojs/starlight/components';

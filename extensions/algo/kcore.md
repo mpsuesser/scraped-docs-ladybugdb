@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/algo/kcore.mdx
 title: "K-Core Decomposition"
 description: "Find cohesive subgraphs where each node has at least k connections using the K-Core Decomposition algorithm."
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 K-Core Decomposition identifies subgraphs where every node has a degree of at least `k`.

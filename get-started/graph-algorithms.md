@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/get-started/graph-algorithms.md
 title: "Run graph algorithms"
 description: "Execute graph algorithms in Ladybug using the algo extension or NetworkX integration"
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 Network analysis is a field of data science and graph theory focused on understanding the connections and interactions between entities in a graph. By examining the structure and dynamics of these networks, analysts can reveal important properties such as influential nodes, community structures, and information flow. Applications of network analysis span diverse areas, including identifying key players in social networks, detecting fraud in financial systems, optimizing transportation routes, and mapping the spread of diseases in healthcare.

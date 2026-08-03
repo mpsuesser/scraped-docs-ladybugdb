@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-manipulation-clauses/example-database.md
 title: "Example database"
 description: "Sample graph dataset with User and City nodes used in documentation examples"
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 We use the following example graph dataset that

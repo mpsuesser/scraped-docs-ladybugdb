@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/developer-guide/database-internal/vector.md
 title: "Vector types"
 description: "Ladybug's column-oriented in-memory data structures for efficient data processing"
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 ## ValueVector

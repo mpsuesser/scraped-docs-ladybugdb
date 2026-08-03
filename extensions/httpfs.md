@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/httpfs.mdx
 title: "HTTP file system extension"
 description: "The HTTPFS extension allows you to read from files hosted on remote file systems"
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 The `httpfs` extension extends the Ladybug file system by allowing reading from or writing to files hosted on

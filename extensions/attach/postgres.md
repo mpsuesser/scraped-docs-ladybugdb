@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/postgres.mdx
 title: "PostgreSQL extension"
 description: "Connect to PostgreSQL databases for scanning tables and importing data with SQL query support."
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 The `postgres` extension allows you to [attach](rdbms.md) PostgreSQL databases to Ladybug.

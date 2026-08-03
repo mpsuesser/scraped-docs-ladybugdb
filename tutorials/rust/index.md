@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/tutorials/rust/index.mdx
 title: "Rust Tutorial: Analyze a Social Network"
 description: "Learn to use Ladybug's Rust API to analyze social network data with hands-on examples"
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/algo/louvain.mdx
 title: "Louvain"
 description: "Detect communities in large networks by maximizing modularity score using the hierarchical Louvain algorithm."
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 The Louvain algorithm extracts communities from large networks by maximizing their

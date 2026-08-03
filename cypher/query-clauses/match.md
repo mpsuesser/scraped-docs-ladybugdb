@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/match.md
 title: "Match"
 description: "MATCH is the clause where you define a graph pattern, i.e., a join of node or relationship records, to find in the database."
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 MATCH is the clause where you define a "graph pattern", i.e., a join of node or relationship records,

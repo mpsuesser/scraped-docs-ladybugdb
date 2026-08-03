@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/npy.md
 title: "Import NumPy"
 description: "Import numerical data from NumPy .npy files into Ladybug node tables for machine learning and data science applications."
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 The `.npy` format is the standard binary file format in [NumPy](https://numpy.org/) for persisting a

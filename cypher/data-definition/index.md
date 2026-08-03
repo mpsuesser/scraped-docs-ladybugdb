@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-definition/index.mdx
 title: "Data definition language"
 description: "Commands to create, alter, and delete database objects including node and relationship tables"
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/visualization/lbug-explorer/import-panel.md
 title: "Import Panel"
 description: "Import data into Ladybug through the Explorer interface with CSV, Parquet, and JSON file upload capabilities."
-access_date: 2026-08-03T19:09:52.962Z
-current_date: 2026-08-03T19:09:52.962Z
+access_date: 2026-08-03T19:40:03.494Z
+current_date: 2026-08-03T19:40:03.494Z
 ---
 
 The Import Panel allows you to import data into your database from CSV or Parquet files via the UI.
