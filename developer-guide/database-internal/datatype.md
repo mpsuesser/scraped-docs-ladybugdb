@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/developer-guide/database-internal/datatype.md
 title: "Data type classes"
 description: "Understanding LogicalType and PhysicalType classes in Ladybug's internal architecture"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 There are two data type classes in Ladybug, `LogicalType` and `PhysicalType`.

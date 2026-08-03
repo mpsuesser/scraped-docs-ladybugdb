@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/interval-operators.md
 title: "Interval operators"
 description: "Interval operators are used to work with the interval data type."
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 Interval operators are used to work with the interval data type. The following table lists the

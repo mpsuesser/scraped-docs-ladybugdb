@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/load-from.md
 title: "Load (Scan)"
 description: "Direct scan over file using the LOAD FROM clause"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 The `LOAD FROM` clause performs a direct scan over an input file **without copying it into the database**.

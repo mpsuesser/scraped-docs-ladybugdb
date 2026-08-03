@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/duckdb.mdx
 title: "DuckDB extension"
 description: "Attach to DuckDB databases for seamless data scanning and importing with comprehensive type mapping support."
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 The `duckdb` extension allows you to [attach](rdbms.md) DuckDB databases to Ladybug.

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/gcs.mdx
 title: "Google Cloud Storage storage"
 description: "Read, write or glob files hosted on Google Cloud Storage"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 You can read, write, or glob files hosted on object storage servers using the

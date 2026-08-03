@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/index.mdx
 title: "Query clauses"
 description: "Core Cypher clauses for pattern matching, filtering, aggregation and result manipulation"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';

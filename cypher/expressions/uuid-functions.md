@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/uuid-functions.md
 title: "UUID functions"
 description: "UUID functions are used to create Universally Unique Identifiers (UUIDs)."
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 UUID functions are used to create Universally Unique Identifiers (UUIDs).

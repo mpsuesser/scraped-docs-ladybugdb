@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/export/csv.md
 title: "Export CSV"
 description: "Export query results to CSV files with customizable formatting options including headers, delimiters, and quotes."
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 The `COPY TO` clause can export query results to a CSV file and is used as follows:

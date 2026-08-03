@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/get-started/prepared-statements.mdx
 title: "Run prepared Cypher statements"
 description: "Use parameterized queries to prevent Cypher injection and improve query performance"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';

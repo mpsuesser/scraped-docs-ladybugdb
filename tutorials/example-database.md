@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/tutorials/example-database.md
 title: "Example database"
 description: "Sample database schemas and datasets for learning and testing Ladybug features with real-world data examples."
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 The dataset used in the tutorials is a social network dataset of users and posts that has the following schema.

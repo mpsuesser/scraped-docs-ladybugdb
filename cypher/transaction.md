@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/transaction.md
 title: "Transactions"
 description: "ACID-compliant transaction management with atomic, durable, and serializable operations"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 Ladybug implements a transaction management subsystem that is atomic, durable and supports serializability.

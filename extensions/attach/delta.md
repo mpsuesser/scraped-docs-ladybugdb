@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/delta.md
 title: "Delta Lake extension"
 description: "Scan and copy from Delta Lake tables using the delta extension with support for local and S3-hosted data."
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 The `delta` extension adds support for scanning/copying from the [`Delta Lake format`](https://delta.io/).

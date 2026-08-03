@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/get-started/cypher-intro.mdx
 title: "Query and visualize your graph"
 description: "Learn how to query graphs using Cypher and visualize results in Ladybug"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 Cypher is a declarative query language for graphs, and should be easy to get started with for

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/indexes.md
 title: "Indexes"
 description: "Create and manage primary key indexes on node tables using HASH or ART index types"
-access_date: 2026-08-03T18:13:35.213Z
-current_date: 2026-08-03T18:13:35.213Z
+access_date: 2026-08-03T18:23:42.333Z
+current_date: 2026-08-03T18:23:42.333Z
 ---
 
 Ladybug automatically creates a primary key index(hash) on every node table to enforce uniqueness
