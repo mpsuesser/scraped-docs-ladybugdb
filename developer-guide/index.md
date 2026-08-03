@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/developer-guide/index.md
 title: "Build Ladybug from source"
 description: "Developer guide for building Ladybug from source code with CMake, Python, and C++20 compiler requirements."
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 :::caution[Note]

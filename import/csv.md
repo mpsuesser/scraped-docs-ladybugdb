@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/csv.md
 title: "Import data from CSV files"
 description: "Bulk import data from CSV files into Ladybug using COPY FROM with extensive configuration options and error handling."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 You can bulk import data to node and relationship tables from CSV files

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-definition/drop.md
 title: "Drop"
 description: "Drop DDL statement"
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 ## Drop a table

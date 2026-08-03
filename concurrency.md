@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/concurrency.md
 title: "Connections & Concurrency"
 description: "Understanding Ladybug's concurrency model, connection handling, and best practices for parallel access"
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 :::caution[Note]

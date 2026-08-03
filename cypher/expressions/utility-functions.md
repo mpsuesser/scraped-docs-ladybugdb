@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/utility-functions.md
 title: "Utility functions"
 description: "Utility functions are used to perform miscellaneous operations and transformations."
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 This section is to provide an overview of specific functions that are difficult to categorize,

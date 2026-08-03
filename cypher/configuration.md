@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/configuration.md
 title: "Configuration"
 description: "Connection and database configuration"
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 The configuration of a Ladybug database or a connection to the database can be changed through a standalone `CALL`

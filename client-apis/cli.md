@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/client-apis/cli.mdx
 title: "Command Line Interface (CLI)"
 description: "Through the CLI, you can issue Cypher queries or call shell commands."
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 Ladybug provides a CLI shell through which you can issue Cypher queries or `CALL` commands to query

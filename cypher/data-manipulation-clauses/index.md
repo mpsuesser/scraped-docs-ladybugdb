@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-manipulation-clauses/index.mdx
 title: "Data manipulation clauses"
 description: "CREATE, SET, DELETE, and MERGE commands for modifying graph data"
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';

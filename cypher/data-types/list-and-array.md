@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-types/list-and-array.md
 title: "LIST and ARRAY"
 description: "Variable-length LIST and fixed-length ARRAY data types for storing collections"
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 Ladybug supports two list-like data types: (i) variable-length lists, simply called `LIST`, and (ii)

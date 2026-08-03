@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/export/json.md
 title: "Export to JSON"
 description: "Export query results to JSON files with support for nested data structures using the JSON extension."
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 The `COPY TO` clause can export query results to a JSON file. To use this feature, you have to install the

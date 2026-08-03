@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/merge.md
 title: "Merge"
 description: "Insert small amounts of data into existing Ladybug tables using the MERGE clause with nodes and relationships."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 For small graphs (a few thousand nodes), the `MERGE` [Cypher clause](../cypher/data-manipulation-clauses/index.md)

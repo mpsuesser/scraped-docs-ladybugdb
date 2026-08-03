@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/graph-databases.md
 title: "Graph database interoperability"
 description: "Import data from other graph databases into Ladybug"
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 Ladybug supports interoperability with various graph databases, allowing you to migrate data from external graph systems into Ladybug for querying and analysis.

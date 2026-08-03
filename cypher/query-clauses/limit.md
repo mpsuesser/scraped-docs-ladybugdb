@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/limit.md
 title: "Limit"
 description: "LIMIT controls the number of tuples returned from a query."
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 `LIMIT` controls the number of tuples returned from a query. It is often used within an [ORDER BY](order-by.md)

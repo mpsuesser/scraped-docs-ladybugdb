@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/unwind.md
 title: "Unwind"
 description: "UNWIND allows you to unnest or explode a list into its individual elements."
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 `UNWIND` allows you to unnest or explode a list `L` that has `k` elements in it,

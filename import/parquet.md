@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/parquet.md
 title: "Import Parquet"
 description: "Bulk import data from Apache Parquet columnar files into Ladybug node and relationship tables using COPY FROM."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 [Apache Parquet](https://Parquet.apache.org/docs/) is an open source, column-oriented persistent storage format

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/index.mdx
 title: "Import data"
 description: "Guide to importing data into Ladybug using COPY FROM commands for CSV, Parquet, JSON, NumPy, and DataFrame sources."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';

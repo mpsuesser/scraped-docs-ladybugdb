@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/index.mdx
 title: "Functions, expressions & operators"
 description: "Built-in functions, expressions, and operators for data manipulation and computation"
-access_date: 2026-08-03T19:01:51.636Z
-current_date: 2026-08-03T19:01:51.636Z
+access_date: 2026-08-03T19:09:52.962Z
+current_date: 2026-08-03T19:09:52.962Z
 ---
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';
