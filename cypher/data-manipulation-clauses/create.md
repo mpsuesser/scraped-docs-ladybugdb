@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-manipulation-clauses/create.md
-title: "Create"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Create (clause)"
+description: "Insert records into your node and relationship tables."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 Not to be confused with the `CREATE` statement from the DDL, the `CREATE` clause in openCypher is

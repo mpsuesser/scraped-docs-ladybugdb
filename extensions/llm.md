@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/llm.mdx
-title: "Llm"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "LLM extension"
+description: "Access popular LLM APIs to create embeddings directly within Ladybug using Cypher"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';

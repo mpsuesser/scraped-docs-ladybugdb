@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/struct-functions.md
 title: "Struct Functions"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+description: "Struct functions are used to create and extract fields from structs."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 `STRUCT`s are commonly known as dictionaries, mappings, or key-value pairs. The key is a `STRING` and the value can be any data type. The following operators work on `STRUCT`s:

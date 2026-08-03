@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/migrate/index.md
-title: "Index"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Migrate your database"
+description: "Export and import databases between different Ladybug versions using EXPORT/IMPORT DATABASE commands"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 You can migrate databases between different versions of Ladybug without manually writing DDL and COPY statements.

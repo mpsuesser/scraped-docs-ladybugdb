@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/logical-operators.md
 title: "Logical Operators"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+description: "Logical operators are used to combine boolean values."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 Ladybug supports using `AND`/`OR`/`XOR`/`NOT` logical operators to combine boolean values.

@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/sqlite.mdx
-title: "Sqlite"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "SQLite extension"
+description: "Attach to SQLite databases for scanning and importing data with dynamic type system support."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 The `sqlite` extension allows you to [attach](rdbms.md) SQLite databases to Ladybug.

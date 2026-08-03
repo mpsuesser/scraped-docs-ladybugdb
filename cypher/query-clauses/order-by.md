@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/order-by.md
 title: "Order By"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+description: "ORDER BY is the clause where you define the order in which you want the query results to be displayed or sort a set of tuples you computed up to a point in your query."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 Order by is the clause where you define the order in which you want the query results to be displayed

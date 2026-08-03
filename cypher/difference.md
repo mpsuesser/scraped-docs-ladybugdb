@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/difference.md
-title: "Difference"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Differences between Ladybug and Neo4j"
+description: "Key differences in syntax, schema requirements, and features between Ladybug and Neo4j"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 If you're coming over from Neo4j, you can find the differences from Neo4j's keywords and syntax

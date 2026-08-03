@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/lbug.md
-title: "Lbug"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "External Ladybug databases"
+description: "Attach to external Ladybug databases for read-only querying of local and remote database instances."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 Using the `ATTACH` statement, you can connect to an external Ladybug database. The external Ladybug database can be local or remote, for example,

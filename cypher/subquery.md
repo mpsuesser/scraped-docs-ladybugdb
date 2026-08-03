@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/subquery.md
-title: "Subquery"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Subqueries"
+description: "Use EXISTS and COUNT subqueries to check patterns and aggregate results within queries"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 A subquery is a query that's called from an enclosing outer query, and executes within its own scope.

@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/visualization/lbug-explorer/schema-panel.md
 title: "Schema Panel"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+description: "Explore database schema visually with node and relationship table information in Ladybug Explorer."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 If you click on the `Schema` tab in the top right corner of Ladybug Explorer, you get to the Schema Panel,

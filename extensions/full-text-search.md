@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/full-text-search.mdx
-title: "Full Text Search"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Full-text search extension"
+description: "Build indexes on string properties for efficient text search with similarity scoring"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 The full-text search (`FTS`) extension can be used to efficiently search within the contents of

@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/attach.md
-title: "Attach"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Attach/Detach to External Databases"
+description: "Connect to external Ladybug databases and other DBMSs for cross-database queries"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 Using the `ATTACH` statement, you can connect to external Ladybug databases as well as several relational DBMSs.

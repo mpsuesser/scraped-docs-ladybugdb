@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/import/copy-from-subquery.md
-title: "Copy From Subquery"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Copy from subquery"
+description: "Bulk import data from MATCH queries or LOAD FROM scans using subqueries in COPY FROM statements."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 You can bulk import the results of a subquery like `MATCH ....` by attaching

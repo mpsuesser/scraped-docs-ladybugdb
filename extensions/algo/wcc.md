@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/algo/wcc.mdx
-title: "Wcc"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Weakly Connected Components"
+description: "Find connected components in directed graphs by treating edges as undirected using WCC algorithm."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 Weak connectivity is a notion defined on undirected graphs. The weakly connected components (WCC) of an

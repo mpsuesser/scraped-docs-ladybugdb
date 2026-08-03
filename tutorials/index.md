@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/tutorials/index.mdx
-title: "Index"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Tutorials"
+description: "Learning resources for Ladybug's features, Cypher query language, and Python data science integration tutorials."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 In this section, we link to some learning resources to become more familiar with Ladybug's usability

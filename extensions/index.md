@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/index.mdx
-title: "Index"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Extensions"
+description: "Dynamically extend Ladybug's capabilities with official extensions for JSON, vector search, full-text search, and more."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 Ladybug has an extension API that is designed to dynamically extend its capabilities. Extensions allow

@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-manipulation-clauses/read-after-update.md
-title: "Read After Update"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "RETURN After Update"
+description: "Access and return data immediately after CREATE, MERGE, SET, or DELETE operations"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 The `RETURN` clause following an update clause has access to the variables that are used in the immediately preceding update clause.

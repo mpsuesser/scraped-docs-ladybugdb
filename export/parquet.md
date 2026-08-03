@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/export/parquet.md
-title: "Parquet"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Export Parquet"
+description: "Export query results to Apache Parquet files with compression support for efficient columnar storage."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 The `COPY TO` clause can export query results to a Parquet file. It can be combined with a subquery

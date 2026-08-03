@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/tutorials/cypher/index.mdx
-title: "Index"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "Cypher Tutorial"
+description: "Interactive Cypher query language tutorial covering graph patterns, clauses, and advanced query techniques."
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';

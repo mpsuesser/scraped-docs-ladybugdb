@@ -1,9 +1,9 @@
 ---
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/json.mdx
-title: "Json"
-description: ""
-access_date: 2026-08-03T17:27:27.470Z
-current_date: 2026-08-03T17:27:27.470Z
+title: "JSON extension"
+description: "Work with JSON data including functions for access, manipulation, and file operations"
+access_date: 2026-08-03T18:13:35.213Z
+current_date: 2026-08-03T18:13:35.213Z
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';
@@ -635,11 +635,10 @@ RETURN cast('{"name": "Alicia", "age": 28}' AS JSON);
 └───────────────────────────────────────────┘
 ```
 
-:::note
-`cast` is a general purpose function that can be used to cast to types other than `JSON`.
-See [Casting](../cypher/expressions/casting.md) for more details.
-:::
-
+> **Note:**
+>
+> `cast` is a general purpose function that can be used to cast to types other than `JSON`.
+> See [Casting](../cypher/expressions/casting.md) for more details.
 ##### `json_object(key:STRING, value:ANY, ...) -> JSON`
 
 Create a JSON object from any number of `key`, `value` pairs.
