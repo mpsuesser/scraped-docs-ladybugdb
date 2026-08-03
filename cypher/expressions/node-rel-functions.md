@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/node-rel-functions.md
 title: "Node & relationship functions"
 description: "Node & relationship functions are used to get information about nodes and relationships."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 The following functions are used to get information about nodes and relationships.

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/get-started/index.mdx
 title: "Create your first graph"
 description: "Get started with Ladybug by creating your first graph database and running basic queries"
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 <div class="font-nunito">

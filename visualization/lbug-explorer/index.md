@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/visualization/lbug-explorer/index.mdx
 title: "Visualize graphs in Ladybug Explorer"
 description: "Browser-based frontend for visualizing and exploring Ladybug database schemas and query results as graphs, tables, or JSON."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 import { LinkCard, CardGrid } from '@astrojs/starlight/components';

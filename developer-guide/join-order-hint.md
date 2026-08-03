@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/developer-guide/join-order-hint.md
 title: "Join order hints"
 description: "Join order hints that allow users to enforce a specific join order"
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 `HINT` is an optional clause, available since Ladybug 0.5.0 and upward, that allows you to enforce a specific query plan

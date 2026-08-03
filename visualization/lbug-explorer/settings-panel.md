@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/visualization/lbug-explorer/settings-panel.md
 title: "Settings Panel"
 description: "Configure Ladybug Explorer display options, graph layout settings, and visualization preferences."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 The Settings Panel, which you can access by clicking `Settings` in the top right corner,

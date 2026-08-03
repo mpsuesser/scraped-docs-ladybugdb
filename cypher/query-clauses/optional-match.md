@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/optional-match.md
 title: "Optional Match"
 description: "OPTIONAL MATCH is another clause where you define a pattern to find in the database."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 `OPTIONAL MATCH` is another clause where you define a pattern to find in the database. The difference from `MATCH` is that

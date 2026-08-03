@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/developer-guide/performance-debugging.md
 title: "Performance Debugging"
 description: "Use EXPLAIN and PROFILE commands to debug query performance and view execution plans"
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 To see the query plans that Ladybug uses, you can

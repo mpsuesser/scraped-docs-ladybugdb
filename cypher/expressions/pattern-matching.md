@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/pattern-matching.md
 title: "Pattern-matching functions"
 description: "Pattern-matching functions are used to match strings against regular expressions."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 Pattern-matching functions are used to match strings against regular expressions.

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/adbc.mdx
 title: "ADBC extension"
 description: "Connect to any ADBC-compatible database (DuckDB, PostgreSQL, SQLite, Snowflake, etc.) using the Apache Arrow ADBC standard."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 The `adbc` extension allows you to attach any database that exposes an [Apache Arrow Database Connectivity (ADBC)](https://arrow.apache.org/adbc/) driver. ADBC is a vendor-neutral standard for database connectivity, and drivers are available for PostgreSQL, DuckDB, SQLite, Snowflake, and more.

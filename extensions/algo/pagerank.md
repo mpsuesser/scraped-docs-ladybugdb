@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/algo/pagerank.mdx
 title: "PageRank"
 description: "Rank node importance in networks by analyzing connections and link structure using the PageRank algorithm."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 The PageRank algorithm ranks nodes in a network based on their importance by analyzing the connections

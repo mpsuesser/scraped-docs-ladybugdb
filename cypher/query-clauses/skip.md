@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/skip.md
 title: "Skip"
 description: "SKIP controls the number of tuples to skip from the start of the query result."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 `SKIP` controls the number of tuples to skip from the start of the query result. It is often used within an [ORDER BY](order-by.md)

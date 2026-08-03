@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/index.mdx
 title: "Tabular data sources"
 description: "Attach to external databases and data sources including PostgreSQL, DuckDB, SQLite, Delta Lake, and Iceberg tables."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 import { Tabs, TabItem } from '@astrojs/starlight/components';

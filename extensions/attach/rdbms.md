@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/rdbms.mdx
 title: "Attaching external RDBMS systems"
 description: "Overview of relational database extensions for connecting to PostgreSQL, DuckDB, and SQLite databases."
-access_date: 2026-08-03T19:40:03.494Z
-current_date: 2026-08-03T19:40:03.494Z
+access_date: 2026-08-03T19:45:31.777Z
+current_date: 2026-08-03T19:45:31.777Z
 ---
 
 import { CardGrid, LinkCard } from '@astrojs/starlight/components';
