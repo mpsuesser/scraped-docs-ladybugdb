@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/interval-functions.md
 title: "Interval functions"
 description: "Interval functions are used to create and manipulate intervals."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:01:51.636Z
+current_date: 2026-08-03T19:01:51.636Z
 ---
 
 Interval functions are used to create and manipulate intervals.

@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/hash-functions.md
 title: "Hash functions"
 description: "Hash functions are used to create and return hashes for a given value."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:01:51.636Z
+current_date: 2026-08-03T19:01:51.636Z
 ---
 
 A hash function maps data of arbitrary size to fixed-size values. The following hash functions have

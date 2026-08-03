@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/example-database.md
 title: "Example database"
 description: "Sample graph dataset with User and City nodes used in query clause examples"
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:01:51.636Z
+current_date: 2026-08-03T19:01:51.636Z
 ---
 
 We use the following example graph dataset that

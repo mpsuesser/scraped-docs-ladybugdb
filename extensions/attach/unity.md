@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/unity.md
 title: "Unity Catalog extension"
 description: "Scan Delta Lake tables registered in Unity Catalog for lakehouse data integration (experimental feature)."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:01:51.636Z
+current_date: 2026-08-03T19:01:51.636Z
 ---
 
 This extension adds the ability to directly scan from delta tables registered in a Unity Catalog using the `LOAD FROM` statement.

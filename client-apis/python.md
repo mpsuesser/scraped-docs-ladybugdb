@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/client-apis/python.mdx
 title: "Python API"
 description: "Use Ladybug embedded graph database in Python applications with the official Python API"
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:01:51.636Z
+current_date: 2026-08-03T19:01:51.636Z
 ---
 
 import { LinkCard } from '@astrojs/starlight/components';

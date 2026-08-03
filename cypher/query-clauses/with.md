@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/query-clauses/with.md
 title: "With"
 description: "WITH can be used to project some expressions, and possibly compute some aggregations, from what your query has computed up to a point before starting the next part of your query."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:01:51.636Z
+current_date: 2026-08-03T19:01:51.636Z
 ---
 
 `WITH` can be used to project some expressions, and possibly compute some aggregations, from what your query has computed up 

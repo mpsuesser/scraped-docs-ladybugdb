@@ -2,8 +2,8 @@
 url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/iceberg.md
 title: "Iceberg extension"
 description: "Scan and copy from Apache Iceberg tables with metadata access and snapshot management capabilities."
-access_date: 2026-08-03T18:55:54.420Z
-current_date: 2026-08-03T18:55:54.420Z
+access_date: 2026-08-03T19:01:51.636Z
+current_date: 2026-08-03T19:01:51.636Z
 ---
 
 The `iceberg` extension adds support for scanning and copying from the [Apache Iceberg format](https://iceberg.apache.org/).
