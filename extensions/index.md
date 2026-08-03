@@ -1,0 +1,127 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/index.mdx
+title: "Index"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+Ladybug has an extension API that is designed to dynamically extend its capabilities. Extensions allow
+you to dynamically load the functionality you need at runtime, while helping limit the size of
+the core Ladybug library.
+
+## Available extensions
+
+The following extensions are currently implemented:
+
+| Extension | Description |
+|----------|----------|
+| [adbc](adbc.md) | Scan data from any ADBC-compatible database (DuckDB, PostgreSQL, SQLite, Snowflake, etc.) |
+| [algo](algo/index.md) | Graph algorithms |
+| [azure](azure.md) | Scan from Azure Blob Storage and Azure Data Lake Storage (ADLS) |
+| [delta](attach/delta.md) | Scan data from Delta Lake tables |
+| [duckdb](attach/duckdb.md) | Scan data from an attached DuckDB database |
+| [fts](full-text-search.md) | Perform full-text search using BM25 |
+| [httpfs](httpfs.md) | Read and write files over HTTP(S) protocol. Also used for [attaching a remote Ladybug database](attach/lbug.md). |
+| [iceberg](attach/iceberg.md) | Scan data from Iceberg tables |
+| [json](json.md) | Scan and manipulate JSON data |
+| [llm](llm.md) | Generate text embeddings using external provider APIs |
+| [neo4j](neo4j.md) | Migrate data from Neo4j into Ladybug |
+| [postgres](attach/postgres.md) | Scan data from an attached PostgreSQL database |
+| [sqlite](attach/sqlite.md) | Scan data from an attached SQLite database |
+| [unity](attach/unity.md) | Scan data from Unity Catalog tables |
+| [vector](vector.md) | Perform vector similarity search |
+
+## Using extensions in Ladybug
+
+This section describes how to use officially supported extensions in Ladybug.
+
+### List available extensions
+
+You can list all available official extensions by running:
+
+```cypher
+CALL SHOW_OFFICIAL_EXTENSIONS() RETURN *;
+```
+
+### Install an extension
+
+Ladybug requires you to install the extension before loading and using it.
+
+Official extensions can be installed from the official extension server by running the `INSTALL` command.
+
+```cypher
+INSTALL <EXTENSION_NAME>;
+```
+You only need to install an extension once.
+
+### Update an extension
+
+If you run the `INSTALL` command for an extension that is already installed,
+the second install command will not perform any action.
+
+If you want to re-download an extension for any reason, for example if the extension is not working
+properly, you can use the `UPDATE` command:
+
+```cypher
+UPDATE <EXTENSION_NAME>;
+```
+
+### Load an extension
+
+You must load extensions before you can use them:
+
+```cypher
+LOAD <EXTENSION_NAME>;
+```
+
+Official extensions can be loaded by simply specifying the extension name.
+For example, to load the `json` extension:
+
+```cypher
+load json;
+```
+If you want to load an extension you have compiled yourself, you can specify the path to the compiled library.
+For example, to load a self-compiled `json` extension:
+
+```cypher
+LOAD EXTENSION 'extension/custom_json/build/libjson.lbug_extension';
+```
+
+### List loaded extensions
+
+You can view all your loaded extensions by running:
+
+```cypher
+CALL SHOW_LOADED_EXTENSIONS() RETURN *;
+```
+
+:::note[Note]
+Extensions are scoped to the session within which they are loaded. Thus, the `LOAD` command must be
+executed for every new CLI session or client script invocation.
+:::
+
+
+### Uninstall an extension
+
+You can uninstall extensions if you don't need them anymore by using the `UNINSTALL` command:
+
+```cypher
+UNINSTALL <EXTENSION_NAME>;
+```
+:::note[Note]
+Uninstalling a currently loaded extension won't affect the running database instance, but you won't be able to load it again in a new Ladybug instance until it's reinstalled.
+:::
+
+### Host your own extension server
+
+If you need to host your own extension server for custom extensions, you can do so using Docker.
+
+You can pull the Docker image and run it in your environment:
+
+```bash
+docker pull ghcr.io/ladybugdb/extension-repo:latest
+docker run -d -p 8080:80 ghcr.io/ladybugdb/extension-repo:latest
+```
+
+In this example, the extension server will be available at `http://localhost:8080`.

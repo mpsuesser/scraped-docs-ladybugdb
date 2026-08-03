@@ -1,0 +1,61 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/index.mdx
+title: "Index"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+Welcome to the Ladybug docs!
+
+Ladybug is an embedded graph database built for query speed and scalability. It is optimized for
+handling complex join-heavy analytical workloads on very large graphs and has the following core features:
+
+- Property Graph data model and Cypher query language
+- Embedded (in-process) integration with applications
+- Columnar disk-based storage
+- Columnar and compressed sparse row-based (CSR) adjacency list and join indices
+- Vectorized and factorized query processing
+- Novel and efficient join algorithms
+- Multi-core query parallelism
+- Serializable ACID transactions
+
+## Why Ladybug?
+
+Although there are many graph database management systems (GDBMSs) in the market today,
+Ladybug stands apart because its design and implementation address specific trade-offs that
+make it a compelling choice for analytical query workloads on large graphs.
+Below, we list some of the key reasons why you should consider using Ladybug.
+
+### Performance and scalability
+
+Ladybug is a state-of-the-art graph DBMS that came out of state-of-the-art academic research and is built by a
+core team of database experts who relentlessly focus on scalability and performance.
+Its founding engineers have co-authored several cutting-edge technical papers and articles on storing
+and querying large graphs.
+
+### Usability
+
+Ladybug is built for industry use cases. It implements a suite of features that lower the barrier of entry
+for modeling your data as a graph and querying it in an expressive [graph query language](https://github.com/opencypher/openCypher).
+Because Ladybug is an embedded database, it runs within your application process, making it easy to set up and use Ladybug.
+Ladybug does not require installing any external dependencies or managing it as a DBMS server.
+
+### Interoperability
+
+Ladybug is designed to be highly interoperable with a variety of external formats and columnar or relational stores,
+including Parquet, Arrow, DuckDB, and more. This allows you to easily move your existing data to and from Ladybug,
+making it a great choice for graph data science, machine learning, and analytics use cases.
+
+### Structured property graph model
+
+The data model in Ladybug is based on the property graph model, together with some structure (including
+node and relationship tables, and a pre-defined schema). This makes it flexible and intuitive to model your existing
+data as a graph, while also being smart enough to optimize query performance and perform vectorized
+operations at scale.
+
+### Open source
+
+Ladybug is open source and has a permissive MIT license, which allows you to build commercial and proprietary
+applications on top of it. Check out [our GitHub repo](https://github.com/LadybugDB/ladybug) and try out Ladybug.
+And while you're there, consider giving us a star and spreading the word!

@@ -1,0 +1,77 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/developer-guide/performance-debugging.md
+title: "Performance Debugging"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+To see the query plans that Ladybug uses, you can
+type `EXPLAIN` or `PROFILE` before your query. The purpose of doing
+this is to debug the performance of the system on a particular
+query. Both commands print the query plan so you can see the sequence of operators and execution steps.
+
+- `EXPLAIN` only shows the plan Ladybug's query compiler/optimizer produced, with zeroes for each execution time.
+- `PROFILE` runs the query plan, produces the output, and collects runtime information for each
+operator in the plan, which will be shown inside the operators.
+
+Below is a very simple example run from the CLI.
+
+```table
+lbug> PROFILE MATCH (a:User) RETURN a.name
+┌─────────┐
+│ a.name  │
+├─────────┤
+│ Adam    │
+│ Karissa │
+│ Zhang   │
+│ Noura   │
+└─────────┘
+(4 tuples)
+Time: 0.32ms (compiling), 0.15ms (executing)
+==============================================
+=============== Profiler Summary =============
+==============================================
+>> plan
+┌──────────────────────────────┐
+│┌────────────────────────────┐│
+││       Physical Plan        ││
+│└────────────────────────────┘│
+└──────────────────────────────┘
+┌──────────────────────────────┐
+│       RESULT_COLLECTOR       │
+│   ------------------------   │
+│          _0_a.name           │
+│   ------------------------   │
+│   ExecutionTime: 0.020000    │
+│   ------------------------   │
+│      NumOutputTuples: 0      │
+└──────────────┬───────────────┘
+┌──────────────┴───────────────┐
+│          PROJECTION          │
+│   ------------------------   │
+│          _0_a.name           │
+│   ------------------------   │
+│   ExecutionTime: 0.000000    │
+│   ------------------------   │
+│      NumOutputTuples: 1      │
+└──────────────┬───────────────┘
+┌──────────────┴───────────────┐
+│   SCAN_STRUCTURED_PROPERTY   │
+│   ------------------------   │
+│           _0_a.name          │
+│   ------------------------   │
+│   ExecutionTime: 0.003000    │
+│   ------------------------   │
+│      NumOutputTuples: 0      │
+└──────────────┬───────────────┘
+┌──────────────┴───────────────┐
+│         SCAN_NODE_ID         │
+│   ------------------------   │
+│              a               │
+│   ------------------------   │
+│   ExecutionTime: 0.000000    │
+│   ------------------------   │
+│      NumOutputTuples: 4      │
+└──────────────────────────────┘
+```

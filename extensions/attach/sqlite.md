@@ -1,0 +1,174 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/attach/sqlite.mdx
+title: "Sqlite"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+The `sqlite` extension allows you to [attach](rdbms.md) SQLite databases to Ladybug.
+
+## Usage
+
+Please see [Install an extension](../index.md#install-an-extension) and [Load an extension](../index.md#load-an-extension) first before getting started.
+
+### Example SQLite database
+
+First, create a sample SQLite database of university students in Python.
+
+```python
+import sqlite3
+conn = sqlite3.connect('university.db')
+cursor = conn.cursor()
+
+cursor.execute("CREATE TABLE IF NOT EXISTS person (name VARCHAR, age INTEGER);")
+cursor.execute("INSERT INTO person (name, age) VALUES ('Alice', 30);")
+cursor.execute("INSERT INTO person (name, age) VALUES ('Bob', 27);")
+cursor.execute("INSERT INTO person (name, age) VALUES ('Carol', 19);")
+cursor.execute("INSERT INTO person (name, age) VALUES ('Dan', 25);")
+conn.commit()
+conn.close()
+```
+
+### Attach a SQLite database
+
+To attach a SQLite database, use the `ATTACH` statement.
+
+```cypher
+ATTACH
+  <DB_PATH> AS <alias>
+  (dbtype sqlite, skip_unsupported_table = <OPTION>)
+```
+
+- `DB_PATH`: Path to the SQLite database instance (can be relative or absolute path)
+- `alias`: Database alias to use in Ladybug. If not provided, the database name from SQLite will be used.
+  When attaching multiple databases, we recommend using aliases.
+- `skip_unsupported_table`: A boolean flag to indicate whether Ladybug should exit with an error or skip
+   tables with unsupported data types. Defaults to `False`.
+
+For example, the `university.db` SQLite database can be attached to Ladybug using the alias `uw`:
+
+```cypher
+ATTACH 'university.db' AS uw (dbtype sqlite);
+```
+
+### SQLite to Ladybug type mapping
+
+The following table shows the mapping from SQLite's data types to Ladybug's data types:
+
+| SQLite Storage Class / Data Type            | Corresponding Data Type in Ladybug |
+|--------------------------------------------|----------------------------------|
+| `NULL`                                       | `BLOB`                            |
+| `INTEGER`                                    | `INT64`                           |
+| `REAL`                                       | `DOUBLE`                          |
+| `TEXT`                                       | `STRING`                          |
+| `BLOB`                                       | `BLOB`                            |
+| `BOOLEAN`                                    | `INT64`                          |
+| `DATE`                                       | `DATE`                           |
+| `TIME`                                       | `TIMESTAMP`                      |
+
+### Scan a SQLite table
+
+Use the `LOAD FROM` statement to scan the `person` table.
+
+```cypher
+LOAD FROM uw.person
+RETURN *;
+```
+```table
+┌─────────┬───────┐
+│ name    │ age   │
+├─────────┼───────┤
+│ Alice   │ 30    │
+│ Bob     │ 27    │
+│ Carol   │ 19    │
+│ Dan     │ 25    │
+└─────────┴───────┘
+```
+
+Note: SQLite uses a [dynamic type system](https://www.sqlite.org/datatype3.html),
+meaning that columns in SQLite can store values with different types.
+Set `sqlite_all_varchar_option` to `True` to scan such columns in Ladybug.
+
+```cypher
+CALL sqlite_all_varchar_option=<OPTION>
+```
+If set to `True`, all SQLite columns will be treated and scanned as `STRING` columns.
+If set to `False`, trying to scan a column with values incompatible with the specified data type will result in a runtime exception.
+
+### Use a default database name
+
+You can set a default database name to avoid having to specify the full database name as a prefix in every query.
+
+The above example can be simplified as:
+
+```cypher
+ATTACH 'university.db' AS uw (dbtype sqlite);
+USE uw;
+LOAD FROM person
+RETURN *;
+```
+
+### Copy data from SQLite tables
+
+You can use the `COPY FROM` statement to import data from a SQLite table into Ladybug.
+
+First, create a `Person` table in Ladybug, with the same schema as the one defined in SQLite:
+
+```cypher
+CREATE NODE TABLE Person (name STRING PRIMARY KEY, age INT32);
+```
+
+When the schemas are the same, you can copy the data from the external DBMS table to the Ladybug table simply as:
+
+```cypher
+COPY Person FROM uw.person;
+```
+If the schemas are not the same, e.g., `Person` contains only the `name` property while the external `uw.person` contains
+`name` and `age`, you can still use `COPY FROM` but with a subquery as:
+
+```cypher
+COPY Person FROM (LOAD FROM uw.person RETURN name);
+```
+
+You can verify that the data was successfully imported:
+
+```cypher
+MATCH (p:Person) RETURN p.*;
+```
+
+```table
+┌─────────┬───────┐
+│ p.name  │ p.age │
+├─────────┼───────┤
+│ Alice   │ 30    │
+│ Bob     │ 27    │
+│ Carol   │ 19    │
+│ Dan     │ 25    │
+└─────────┴───────┘
+```
+
+### Clear the schema cache
+
+To avoid redundantly retrieving schema information from attached databases, Ladybug maintains a schema cache
+including table names and their respective columns and types. Should modifications occur in the schema
+via an alternate connection to attached RDBMSs, such as creation or deletion of tables, the cached
+schema data may become obsolete. You can use the `clear_attached_db_cache()` function to refresh the cached
+schema information in such cases.
+
+```cypher
+CALL clear_attached_db_cache();
+```
+
+:::note[Note]
+If you have attached to databases from different RDBMSs, say Postgres, DuckDB, and SQLite,
+this call will clear the cache for _all_ of them.
+:::
+
+### Detach a database
+
+To detach a database, use `DETACH [ALIAS]` as follows:
+
+```cypher
+DETACH uw;
+```

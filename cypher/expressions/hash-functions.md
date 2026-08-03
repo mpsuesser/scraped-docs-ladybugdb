@@ -1,0 +1,20 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/expressions/hash-functions.md
+title: "Hash Functions"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+A hash function maps data of arbitrary size to fixed-size values. The following hash functions have
+been implemented to be used in Cypher.
+
+<div class="scroll-table">
+
+| Function | Description | Example | Result |
+| ----------- | --------------- | ----------- | ----------- |
+| `md5(string)` | returns an MD5 hash of the provided input | `md5('lbug')` | `caca2358cada60d679fc0310d440f8ca` |
+| `sha256(string)` | returns a SHA-256 hash of the provided input | `sha256('lbug')` | `e129f5000a4b71ccc3a0e6353a86cc57989106e670793db98efa34b7527aefa5` |
+| `hash(string)` | returns a Murmurhash64 hash of the provided input | `hash('lbug')` | `-144620710730482887` |
+
+</div>

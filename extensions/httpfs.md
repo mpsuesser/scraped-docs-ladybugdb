@@ -1,0 +1,84 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/httpfs.mdx
+title: "Httpfs"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+The `httpfs` extension extends the Ladybug file system by allowing reading from or writing to files hosted on
+remote file systems. The `httpfs` extension provides support for the following remote file systems:
+
+- This extension: Plain HTTP(S) file systems
+- [S3 extension](s3.md): Object storage via the AWS S3 API
+- [GCS extension](gcs.md): Object storage via the Google Cloud Storage (GCS) API
+
+If you're looking to use Ladybug with Azure Blob Storage, see the [Azure extension](azure.md).
+
+:::note[Note]
+The S3 and GCS extensions are implemented as _features_ of the `httpfs` extension.
+
+- Over plain HTTP(S), Ladybug only supports reading files.
+- For object storage via the S3 or GCS API, Ladybug supports reading, writing, and globbing files.
+:::
+
+## Usage
+
+Please see [Install an extension](index.md#install-an-extension) and [Load an extension](index.md#load-an-extension) first before getting started.
+
+## HTTP(S) file system
+
+Using the `httpfs` extension, you can read from a file hosted on an HTTP(S) server in the same way as you would
+from a local file. The example below shows how to scan data from a CSV file hosted on an HTTP(S) server.
+
+```cypher
+LOAD FROM "https://extension.ladybugdb.com/dataset/test/city.csv"
+RETURN *;
+```
+
+```
+Waterloo|150000
+Kitchener|200000
+Guelph|75000
+```
+
+:::note[Note]
+Reading files over HTTP(S), including attaching a remote database via an HTTP URL, requires the server to support HTTP range requests.
+Object storage (S3/GCS) and standard static-file servers (nginx, Apache, Caddy) support this by default; dynamically generated responses and
+some proxies may not.
+:::
+
+## Local cache
+
+Remote file system calls can be expensive and highly dependent on your network conditions (bandwidth, latency).
+Queries involving a large number of file operations (read, write, glob) can be slow.
+To expedite such queries, we introduce a new option: `HTTP_CACHE_FILE`.
+A local file cache is initialized when Ladybug requests the file for the first time.
+Subsequent remote file operations will be translated as local file operation on the cache file.
+
+The example below shows how to enable the local cache for remote files.
+
+```cypher
+CALL HTTP_CACHE_FILE=TRUE;
+```
+
+:::note[Tip]
+Cached files are visible per transaction. Therefore, if you have set HTTP_CACHE_FILE=TRUE and then run a LOAD FROM statement on
+a remote file, say `LOAD FROM "https://example.com/city.csv" RETURN *;`, then this file will be downloaded first and then scanned
+locally from the downloaded file. If you run the same `LOAD FROM` statement again, it will be downloaded again from the remote URL.
+This is because the second statement is executed as a separate transaction and we do not know if the already downloaded remote
+file has changed since the last time Ladybug downloaded it.
+:::
+
+If you need to scan the same remote file multiple times and benefit from caching across multiple scans, you
+can run all the `LOAD FROM` statements in the same transaction. The example below shows how to do this.
+
+```cypher
+BEGIN TRANSACTION;
+LOAD FROM "https://example.com/city.csv" RETURN *;
+LOAD FROM "https://example.com/city.csv" RETURN *;
+COMMIT;
+```
+
+Now the second `LOAD FROM` statement will run much faster because the file is already downloaded
+and cached and the second scan is within the same transaction as the first one.

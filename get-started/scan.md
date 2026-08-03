@@ -1,0 +1,250 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/get-started/scan.mdx
+title: "Scan"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+There are two ways to work with external data in Ladybug:
+
+1. **Ingest** - Copy data into Ladybug for storage and querying
+2. **Query in place** - Query external data sources directly without importing
+
+## Ingest data into Ladybug
+
+Use `COPY FROM` to bulk import data from files or external databases into Ladybug node or relationship tables.
+
+```cypher
+COPY Person FROM "person.csv";
+```
+
+Supported formats:
+- Parquet (recommended for performance)
+- CSV (slower but commonly used)
+- JSON (slower but commonly used)
+- NumPy
+- Pandas/Polars DataFrames
+- PyArrow Tables
+
+<LinkCard
+  title="Import data"
+  description="Learn more about COPY FROM for importing data"
+  href="/import"
+/>
+
+## Load from (scan in memory)
+
+Use `LOAD FROM` to scan data from various sources into memory without inserting it into the database. This is useful for inspecting data structure and applying simple transformations before importing.
+
+When scanning with `LOAD FROM`, only the `WHERE` clause is supported for filtering:
+
+```cypher
+LOAD FROM "user.csv" (header = true)
+WHERE age > 25
+RETURN COUNT(*);
+```
+
+### Example: CSV file
+
+Say you have a `user.csv` file that looks like this:
+
+```csv
+// user.csv
+name,age
+Adam,30
+Karissa,40
+Zhang,50
+Noura,25
+```
+
+You can scan the file and count the number of rows:
+```cypher
+LOAD FROM "user.csv" (header = true)
+RETURN COUNT(*);
+```
+This counts the number of rows in the file.
+```table
+┌──────────────┐
+│ COUNT_STAR() │
+│ INT64        │
+├──────────────┤
+│ 4            │
+└──────────────┘
+```
+
+You can also apply filter predicates via the `WHERE` clause, like this:
+```cypher
+LOAD FROM "user.csv" (header = true)
+WHERE age > 25
+RETURN COUNT(*);
+```
+The above query counts only the rows where the `age` column is greater than 25.
+```table
+┌──────────────┐
+│ COUNT_STAR() │
+│ INT64        │
+├──────────────┤
+│ 3            │
+└──────────────┘
+```
+Note that when scanning from CSV files, Ladybug will attempt to auto-cast the data to the correct type
+when possible. For example, the `age` column is cast to an `INT64` type.
+
+You can reorder the columns by simply returning them in the order you want. The `LIMIT` keyword
+can be used to limit the number of rows returned. The example below returns the first two rows,
+with the `age` and `name` columns in the order specified.
+
+```cypher
+LOAD FROM "user.csv" (header = true)
+RETURN age, name
+LIMIT 2;
+```
+```table
+┌───────┬─────────┐
+│ age   │ name    │
+│ INT64 │ STRING  │
+├───────┼─────────┤
+│ 30    │ Adam    │
+│ 40    │ Karissa │
+└───────┴─────────┘
+```
+
+## Query external data in place
+
+Query data directly from external sources without importing. Unlike `LOAD FROM`, this supports any Cypher query that works on native node/rel tables.
+
+### Supported sources
+
+- Icebug disk (CSR Parquet files with a Cypher schema)
+- Icebug memory (CSR Arrow tables)
+- Arrow memory
+- DuckDB tables
+- PostgreSQL (coming soon)
+- SQLite (coming soon)
+
+### Syntax
+
+Create a table that references an external data source using the `WITH (storage="...")` option:
+
+```cypher
+CREATE NODE TABLE Employee (id INT64, name STRING, PRIMARY KEY (id))
+WITH (storage='path/to/employee.parquet');
+```
+
+```cypher
+CREATE REL TABLE WorksIn (from Person, to Company, since INT32)
+WITH (storage='path/to/works_in.parquet', format='icebug-disk');
+```
+
+### Icebug disk
+
+**NODE tables:**
+```cypher
+CREATE NODE TABLE Employee (id INT64, name STRING, PRIMARY KEY (id))
+WITH (storage='icebug-disk/', format='icebug-disk');
+
+CREATE NODE TABLE Company (id INT64, name STRING, PRIMARY KEY (id))
+WITH (storage='icebug-disk/company.parquet', format='icebug-disk');
+```
+
+**REL table:**
+```cypher
+CREATE REL TABLE WorksIn (from Employee, to Company, since INT32)
+WITH (storage='icebug-disk/', format='icebug-disk');
+```
+
+For more details about generating and using icebug-disk files, see the [icebug documentation](../import/icebug.md).
+
+### Icebug memory
+
+```python
+import ladybug as lb
+
+db = lb.Database()
+conn = lb.Connection(db)
+
+# Create node table
+conn.create_arrow_table(
+    table_name="employee",           # node table name to be used in ladybug
+    dataframe=pa_employee            # node table as a pa.Table
+)
+
+# create rel table
+conn.create_arrow_rel_table(
+    table_name="worksin",            # rel table name to be used in ladybug
+    src_table_name="employee",       # src node table name from table creation earlier
+    dst_table_name="company",        # dst node table name from table creation earlier
+    layout="CSR",
+    dataframe=pa_company_indices,    # rel table with 'source' and 'target' columns
+    dst_col_name="target",           # dst col name in the indices table
+    indptr=pa_company_indptr,        # row pointers for indices table
+)
+```
+
+For more details about generating and using icebug-memory tables, see the [icebug documentation](../import/icebug.md).
+
+### Arrow memory
+
+```python
+import ladybug as lb
+
+db = lb.Database()
+conn = lb.Connection(db)
+
+# Create node table
+conn.create_arrow_table(
+    table_name="employee",           # node table name to be used in ladybug
+    dataframe=pa_employee            # node table as a pa.Table
+)
+
+# create rel table
+conn.create_arrow_rel_table(
+    table_name="worksin",            # rel table name to be used in ladybug
+    src_table_name="employee",       # src node table name from table creation earlier
+    dst_table_name="company",        # dst node table name from table creation earlier
+    layout="FLAT",
+    dataframe=pa_company,            # rel table with 'from' and 'to' columns
+)
+```
+
+### DuckDB
+
+First, [attach a DuckDB database](../extensions/attach/duckdb.md):
+
+```cypher
+ATTACH 'university.db' AS uw (dbtype duckdb);
+```
+
+Then create tables that reference the DuckDB tables:
+
+**NODE tables:**
+```cypher
+CREATE NODE TABLE Employee (id INT64, name STRING, PRIMARY KEY (id))
+WITH (storage='uw.employee');
+
+CREATE NODE TABLE Company (id INT64, name STRING, PRIMARY KEY (id))
+WITH (storage='uw.company');
+```
+
+**REL table:**
+```cypher
+CREATE REL TABLE WorksIn (from Employee, to Company, since INT32)
+WITH (storage='uw.worksIn');
+```
+
+Once created, you can query the tables just like any other Ladybug table:
+
+```cypher
+MATCH (e:Employee)-[w:WorksIn]->(c:Company)
+RETURN e.name, c.name, w.since
+LIMIT 5;
+```
+
+<LinkCard
+  title="DuckDB extension"
+  description="Learn more about attaching DuckDB databases"
+  href="/extensions/attach/duckdb/"
+/>

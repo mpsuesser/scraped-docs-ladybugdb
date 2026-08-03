@@ -1,0 +1,85 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/tutorials/index.mdx
+title: "Index"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+In this section, we link to some learning resources to become more familiar with Ladybug's usability
+features, Cypher and its integration with the Python data science and machine learning ecosystem.
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+## Cypher tutorial
+
+If you're just getting started with Ladybug, we recommend starting with our introductory tutorial on
+Cypher, the query language used in Ladybug.
+
+<LinkCard
+  title="Intro to Cypher"
+  description="Become familiar with Cypher syntax"
+  href="/tutorials/cypher"
+/>
+
+## Python
+
+For Python developers, see the following tutorials.
+
+### Intro tutorial
+
+<LinkCard
+title="Python tutorial"
+description="Tutorial for Ladybug's Python API"
+href="/tutorials/python"
+/>
+
+<LinkCard
+title="Python tutorial notebook"
+description="Run the same social network tutorial as a Jupyter notebook"
+href="https://github.com/LadybugDB/ladybug-icebug-notebooks/blob/main/ladybug-python-social-network.ipynb"
+/>
+
+### Colab notebooks
+
+We've compiled a series of Google Colab 
+notebooks that demonstrate how Ladybug can be used and integrated with the Python data science, machine 
+learning and AI ecosystem.
+
+<CardGrid>
+  <LinkCard
+    title="Ladybug and NetworkX"
+    description="Working with NetworkX & graph algorithms using a Ladybug graph"
+    href="https://colab.research.google.com/drive/1_AK-CHELz0fLAc2RCPvPgD-R7-NGyrGu"
+  />
+  <LinkCard
+    title="Ladybug and PyTorch Geometric (1)"
+    description="Node property prediction"
+    href="https://colab.research.google.com/drive/1ijFoPN4USr4umUzRoCfRPFNZfbhKKLcC"
+  />
+  <LinkCard
+    title="Ladybug and PyTorch Geometric (2)"
+    description="Link prediction"
+    href="https://colab.research.google.com/drive/1OxlDLUYZL8jTkqKdVebFtek7yZ5of7FK"
+  />
+  <LinkCard
+    title="LlamaIndex-Ladybug Integration"
+    description="Using Ladybug as a property graph store for LlamaIndex"
+    href="https://colab.research.google.com/drive/1brAdNRNLG2XHD7Jv3ZwSQCOCJ_wmfd1B"
+  />
+  <LinkCard
+    title="LangChain-Ladybug Integration"
+    description="Using Ladybug as a property graph store for LangChain"
+    href="https://colab.research.google.com/drive/16FscFHwSKQNXFprChdQufMP7G6u8cMTS"
+  />
+</CardGrid>
+
+## Rust
+
+For Rust developers, see the following tutorials.
+
+<LinkCard
+title="Rust tutorial"
+description="Tutorial for Ladybug's Rust API"
+href="/tutorials/rust"
+/>

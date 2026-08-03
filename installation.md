@@ -1,0 +1,286 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/installation.mdx
+title: "Installation"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+<div class="padauk-regular">
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { version } from '../../version.json';
+import { Code } from 'astro-expressive-code/components';
+
+export const DOWNLOAD_LINKS = {
+  cli:{
+    linux: `# x86-64
+curl -L -O https://github.com/LadybugDB/ladybug/releases/download/v${version}/lbug_cli-linux-x86_64.tar.gz
+# aarch64
+curl -L -O https://github.com/LadybugDB/ladybug/releases/download/v${version}/lbug_cli-linux-aarch64.tar.gz
+
+tar xzf lbug_cli-*.tar.gz`,
+macos: `curl -L -O https://github.com/LadybugDB/ladybug/releases/download/v${version}/lbug_cli-osx-universal.tar.gz
+tar xzf lbug_cli-*.tar.gz
+./lbug`,
+    win: `curl -L -O https://github.com/LadybugDB/ladybug/releases/latest/download/lbug_cli-windows-x86_64.zip`,
+    winUrl: `https://github.com/LadybugDB/ladybug/releases/latest/download/lbug_cli-windows-x86_64.zip`,
+  },
+java: `<dependency>
+  <groupId>com.ladybugdb</groupId>
+  <artifactId>lbug</artifactId>
+  <version>${version}</version>
+</dependency>
+`,
+cxx: {
+    linux: `# x86-64
+curl -L -O https://github.com/LadybugDB/ladybug/releases/download/v${version}/liblbug-linux-x86_64.tar.gz
+# aarch64
+curl -L -O https://github.com/LadybugDB/ladybug/releases/download/v${version}/liblbug-linux-aarch64.tar.gz
+
+tar xzf liblbug-*.tar.gz`,
+    macos: `curl -L -O https://github.com/LadybugDB/ladybug/releases/download/v${version}/liblbug-osx-universal.tar.gz
+
+tar xzf liblbug-*.tar.gz`,
+    win: `curl -L -O https://github.com/LadybugDB/ladybug/releases/download/v${version}/liblbug-windows-x86_64.zip`
+},
+  go: `go get github.com/LadybugDB/go-ladybug`,
+swift: `dependencies: [
+  .package(url: "https://github.com/LadybugDB/swift-ladybug/", branch: "${version}"),
+],`
+}
+
+Ladybug is an embedded graph database that can be used from the command line and from
+a variety of programming languages. This page shows all the ways you can install Ladybug.
+After installation, you can learn how to run Ladybug by [creating your first graph](get-started/index.md).
+
+:::note[License]
+All source code and pre-compiled binaries of Ladybug are distributed under the [MIT License](https://github.com/LadybugDB/ladybug/blob/main/LICENSE). By installing and using Ladybug, you acknowledge and agree to these terms.
+:::
+
+## Command Line (Shell)
+
+If you don't need Ladybug embedded in your application, you can use the CLI shell. This is a standalone
+executable with no dependencies that can be used to interact with a Ladybug database using just Cypher.
+
+<Tabs syncKey="cli">
+<TabItem label="Linux">
+
+You can install the Ladybug CLI using our install script.
+
+```bash
+curl -s https://install.ladybugdb.com | bash
+```
+
+You can now run Ladybug from the command line.
+
+```bash
+lbug
+```
+
+</TabItem>
+
+<TabItem label="macOS">
+
+You can install the Ladybug CLI using Homebrew.
+
+```bash
+brew install ladybug
+```
+
+You can now run Ladybug from the command line.
+
+```bash
+lbug
+```
+
+Alternatively, you can download the Ladybug CLI directly.
+
+<Code code={DOWNLOAD_LINKS.cli.macos} lang="bash" frame="terminal"/>
+
+</TabItem>
+
+<TabItem label="Windows">
+
+Use a tool like `curl` to download the latest version of the Ladybug CLI to your local machine. Alternatively,
+simply open [this URL](https://github.com/LadybugDB/ladybug/releases/latest/download/lbug_cli-windows-x86_64.zip) in your browser.
+
+```bash
+curl -L -O https://github.com/LadybugDB/ladybug/releases/latest/download/lbug_cli-windows-x86_64.zip
+```
+
+Right-click on the `lbug_cli-xxx.zip` file and click on **Extract All**. This will create a directory
+containing a file named `lbug.exe`. Then, right-click on the directory and click "Open in terminal".
+From within the terminal, you can then run `./lbug.exe`.
+
+</TabItem>
+
+<TabItem label="Nix">
+
+On Linux, macOS, and WSL2, you can also use [`Nix`](https://nixos.org/learn) to run the Ladybug CLI.
+
+Run Ladybug in a temporary shell:
+
+```bash
+nix-shell -p ladybugdb
+lbug
+```
+
+Alternatively, you can install Ladybug declaratively using [NixOS](https://nixos.org/manual/nixos/stable/#sec-package-management) or [Home Manager](https://github.com/nix-community/home-manager) configuration:
+
+```nix
+{
+  environment.systemPackages = [ pkgs.lbug ]; // NixOS
+  home.packages = [ pkgs.lbug ];              // Home Manager
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+## Python
+
+You can use `uv`, `pip`, or `nix` to install the Ladybug Python client library.
+The instructions are the same for Linux, macOS, and Windows.
+
+<Tabs syncKey="python-package-manager">
+
+<TabItem label="uv">
+
+```bash
+uv init
+uv add ladybug
+```
+
+</TabItem>
+
+<TabItem label="pip">
+
+```bash
+pip install ladybug
+```
+
+</TabItem>
+
+<TabItem label="nix">
+
+```bash
+nix-shell -p "python3.withPackages (ps: [ ps.lbug ])"
+```
+
+</TabItem>
+
+</Tabs>
+
+## Node.js
+
+Use `npm` to install the Ladybug Node.js client library.
+
+```bash
+npm install @ladybugdb/core
+```
+
+## Java
+
+The latest stable version is available on [Maven Central](https://central.sonatype.com/artifact/com.ladybugdb/lbug).
+
+<Code code={DOWNLOAD_LINKS.java} lang="xml" frame="terminal"/>
+
+## Rust
+
+Use Cargo to install the Ladybug Rust client library. This will by default build and statically link Ladybug's C++
+library from source. You can also link against the dynamic release libraries, as described in the [crate docs](https://docs.rs/lbug/latest/lbug/#building).
+
+```bash
+cargo add lbug
+```
+
+## Go
+
+Ladybug's Go API is a wrapper around the C API of Ladybug. The installation step below assumes that you have
+initialized a Go project that has a `go.mod` file, as described in [the official tutorial](https://go.dev/doc/tutorial/create-module).
+
+<Code code={DOWNLOAD_LINKS.go} lang="bash" frame="terminal"/>
+
+## Swift
+
+To add `lbug-swift` to your Swift project, you can use the Swift package manager.
+1. Add the package to your Package.swift dependencies.
+    <Code code={DOWNLOAD_LINKS.swift} lang="swift" frame="terminal"/>
+
+    You can change the branch to a tag to use a specific version (e.g., {version} for the latest stable release or `main` for the latest development version).
+
+2. Add `Ladybug` to your target dependencies.
+    ```swift
+    targets: [
+      .target(
+        name: "YourTargetName",
+        dependencies: [
+          .product(name: "Ladybug", package: "swift-ladybug"),
+        ]
+      )
+    ]
+    ```
+
+Alternatively, you can add the package through Xcode:
+1. Open your Xcode project.
+2. Go to `File` > `Add Packages Dependencies...`.
+3. Enter the URL of the ladybug-swift repository: `https://github.com/LadybugDB/swift-ladybug`.
+4. Select the version you want to use (e.g., {version} for the latest stable release or `main` for the latest development version).
+
+
+## C/C++
+
+Use a tool like `curl` to download the latest version of the Ladybug C/C++ binaries to your local machine.
+
+The Ladybug C++ client is distributed as a so/dylib/dll+lib library file along with a header file (`lbug.hpp`).
+Once you've downloaded and extracted the C++ files into a directory, you can link it to your C++
+program by adding the directory to your build system's search paths.
+
+<Tabs syncKey="cli">
+
+<TabItem label="Linux">
+
+<Code code={DOWNLOAD_LINKS.cxx.linux} lang="bash" frame="terminal"/>
+
+
+</TabItem>
+
+<TabItem label="macOS">
+
+<Code code={DOWNLOAD_LINKS.cxx.macos} lang="bash" frame="terminal"/>
+
+</TabItem>
+
+<TabItem label="Windows">
+
+<Code code={DOWNLOAD_LINKS.cxx.win} lang="bash" frame="terminal"/>
+
+</TabItem>
+
+</Tabs>
+
+## Ladybug Explorer
+
+Ladybug Explorer is a web-based GUI for Ladybug. It allows you to explore and query your Ladybug database
+using a web browser. Refer to the Ladybug Explorer [GitHub repo](https://github.com/LadybugDB/explorer)
+for more details.
+
+## Ladybug MCP Server
+
+Our [Model Context Protocol](https://modelcontextprotocol.io/introduction) server allows you to expose
+your Ladybug database as a tool that can be used by LLMs and agents.
+Refer to the Ladybug-MCP [GitHub repo](https://github.com/LadybugDB/mcp-server-ladybug) for more details.
+
+## Nightly Builds
+
+If you want access to the latest features in development, you can use our nightly builds.
+
+- Python: `uv pip install --pre ladybug`
+- Node.js: `npm i @ladybugdb/core@next`
+- Java: The latest snapshot version is available on [GitHub Packages](https://github.com/LadybugDB/ladybug/packages/)
+- For the CLI, C/C++ shared libraries, and Rust crate, the latest nightly versions for each can be
+downloaded from the latest run of [this GitHub Actions workflow](https://github.com/LadybugDB/ladybug/actions/workflows/build-and-deploy.yml).
+
+</div>

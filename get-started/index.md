@@ -1,0 +1,948 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/get-started/index.mdx
+title: "Index"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+<div class="font-nunito">
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import {version} from '../../../version.json';
+import { Code } from 'astro-expressive-code/components';
+
+export const CODE_BLOCKS = {
+    java: {
+        maven: `<dependency>
+    <groupId>com.ladybugdb</groupId>
+    <artifactId>lbug</artifactId>
+    <version>${version}</version>
+</dependency>`,
+        groovy: `implementation 'com.ladybugdb:lbug:${version}'`,
+        kotlin: `implementation("com.ladybugdb:lbug:${version}")`,
+        gradle: `plugins {
+    id 'java'
+    id 'application'
+}
+application {
+    mainClassName = "Main"
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    implementation 'com.ladybugdb:lbug:${version}'
+}`,
+},
+swift:`import PackageDescription
+
+let package = Package(
+    name: "lbug-swift-example",
+    platforms: [
+        .macOS(.v11),
+        .iOS(.v14),
+    ],
+    dependencies: [
+        .package(url: "https://github.com/LadybugDB/swift-ladybug/", branch: "${version}"),
+    ],
+    targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .executableTarget(
+            name: "swift-ladybug-example",
+            dependencies: [
+                .product(name: "Ladybug", package: "swift-ladybug"),
+            ]
+        ),
+    ]
+)`
+
+}
+
+Ladybug implements a **structured property graph model** and requires a pre-defined schema.
+
+- Schema definition involves node and relationship tables and their associated properties.
+- Each property key is strongly typed and these types must be explicitly declared.
+- For node tables, a primary key **must** be defined.
+- For relationship tables, no primary key is required.
+
+## Persistence
+
+Ladybug supports both **on-disk** and **in-memory** modes of operation. The mode is determined
+at the time of creating the database, as explained below.
+
+### On-disk database
+
+If you specify a database path when initializing a database, such as `example.lbdb`, Ladybug
+will operate in the **on-disk** mode. In this mode, Ladybug persists all data to disk at the given
+path. All transactions are logged to a Write-Ahead Log (WAL) and updates are periodically merged into the
+database files during checkpoints.
+
+:::tip[When do I need an on-disk database?]
+On-disk databases allow you to process larger-than-memory workloads, provide transactional guarantees, and persist data to disk.
+:::
+
+### In-memory database
+
+If you omit the database path, by specifying it as `""` or `:memory:`, Ladybug will operate in the **in-memory** mode.
+In this mode, there are **no writes** to the WAL, and no data is persisted to disk. All data is lost when the process finishes.
+
+:::note[When do I need an in-memory database?]
+In-memory databases are temporary and can be useful when you want to perform quick graph querying
+and analysis on small datasets, without persisting the data to disk.
+:::
+
+## Quick start
+
+Ensure that you have [installed](../installation.md) Ladybug using the CLI or your preferred client API.
+Also download the example CSV files [from our GitHub repo](https://github.com/LadybugDB/dataset/tree/main/demo-db/csv).
+
+```bash
+mkdir ./data/
+curl -L -o ./data/city.csv https://raw.githubusercontent.com/LadybugDB/dataset/refs/heads/main/demo-db/csv/city.csv
+curl -L -o ./data/user.csv https://raw.githubusercontent.com/LadybugDB/dataset/refs/heads/main/demo-db/csv/user.csv
+curl -L -o ./data/follows.csv https://raw.githubusercontent.com/LadybugDB/dataset/refs/heads/main/demo-db/csv/follows.csv
+curl -L -o ./data/lives-in.csv https://raw.githubusercontent.com/LadybugDB/dataset/refs/heads/main/demo-db/csv/lives-in.csv
+```
+
+In this example, we will create a graph with two node types, `User` and `City`, and two relationship types, `Follows` and `LivesIn`.
+
+Because Ladybug is an embedded database, there are no servers to set up. You can simply import the
+`lbug` module in your code and run queries on the database. The examples for different client APIs
+below demonstrate how to create a graph schema and import data into an on-disk Ladybug database.
+
+<Tabs syncKey="client-apis">
+
+<TabItem label="Python">
+
+```py
+# main.py
+import ladybug as lb
+
+def main():
+    # Create an empty on-disk database and connect to it
+    db = lb.Database("example.lbdb")
+    conn = lb.Connection(db)
+
+    # Create schema
+    conn.execute("CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)")
+    conn.execute("CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)")
+    conn.execute("CREATE REL TABLE Follows(FROM User TO User, since INT64)")
+    conn.execute("CREATE REL TABLE LivesIn(FROM User TO City)")
+
+    # Insert data
+    conn.execute('COPY User FROM "./data/user.csv"')
+    conn.execute('COPY City FROM "./data/city.csv"')
+    conn.execute('COPY Follows FROM "./data/follows.csv"')
+    conn.execute('COPY LivesIn FROM "./data/lives-in.csv"')
+
+    # Execute Cypher query
+    response = conn.execute(
+        """
+        MATCH (a:User)-[f:Follows]->(b:User)
+        RETURN a.name, b.name, f.since;
+        """
+    )
+    for row in response:
+        print(row)
+
+if __name__ == "__main__":
+    main()
+```
+
+```bash
+['Adam', 'Karissa', 2020]
+['Adam', 'Zhang', 2020]
+['Karissa', 'Zhang', 2021]
+['Zhang', 'Noura', 2022]
+```
+
+The approach shown above returned a list of lists containing query results. See below for more
+output options for Python.
+
+**Output as a dictionary**
+
+You can also get the results of a Cypher query as a dictionary.
+
+```py
+response = conn.execute(
+    """
+    MATCH (a:User)-[f:Follows]->(b:User)
+    RETURN a.name, b.name, f.since;
+    """
+)
+for row in response.rows_as_dict():
+    print(row)
+```
+
+```bash
+{'a.name': 'Adam', 'b.name': 'Karissa', 'f.since': 2020}
+{'a.name': 'Adam', 'b.name': 'Zhang', 'f.since': 2020}
+{'a.name': 'Karissa', 'b.name': 'Zhang', 'f.since': 2021}
+{'a.name': 'Zhang', 'b.name': 'Noura', 'f.since': 2022}
+```
+
+**Pandas**
+
+You can also pass the results of a Cypher query to a [Pandas](https://pandas.pydata.org/) DataFrame
+for downstream tasks. This assumes that `pandas` is installed in your environment.
+
+```py
+# pip install pandas
+response = conn.execute(
+    """
+    MATCH (a:User)-[f:Follows]->(b:User)
+    RETURN a.name, b.name, f.since;
+    """
+)
+print(response.get_as_df())
+```
+
+```bash
+    a.name   b.name  f.since
+0     Adam  Karissa     2020
+1     Adam    Zhang     2020
+2  Karissa    Zhang     2021
+3    Zhang    Noura     2022
+```
+
+**Polars**
+
+[Polars](https://pola.rs/) is another popular DataFrames library for Python, and you
+can process the results of a Cypher query in much the same way you did with Pandas. This assumes
+that `polars` is installed in your environment.
+
+```py
+# pip install polars
+response = conn.execute(
+    """
+    MATCH (a:User)-[f:Follows]->(b:User)
+    RETURN a.name, b.name, f.since;
+    """
+)
+print(response.get_as_pl())
+```
+
+```table
+shape: (4, 3)
+┌─────────┬─────────┬─────────┐
+│ a.name  ┆ b.name  ┆ f.since │
+│ ---     ┆ ---     ┆ ---     │
+│ str     ┆ str     ┆ i64     │
+╞═════════╪═════════╪═════════╡
+│ Adam    ┆ Karissa ┆ 2020    │
+│ Adam    ┆ Zhang   ┆ 2020    │
+│ Karissa ┆ Zhang   ┆ 2021    │
+│ Zhang   ┆ Noura   ┆ 2022    │
+└─────────┴─────────┴─────────┘
+```
+
+**Arrow Table**
+
+You can also use the [PyArrow](https://arrow.apache.org/docs/python/index.html) library to work with
+Arrow Tables in Python. This assumes that `pyarrow` is installed in your environment. This
+approach is useful when you need to interoperate with other systems that use Arrow as a backend.
+In fact, the `get_as_pl()` method shown above for Polars materializes a `pyarrow.Table` under the hood.
+
+```py
+# pip install pyarrow
+response = conn.execute(
+    """
+    MATCH (a:User)-[f:Follows]->(b:User)
+    RETURN a.name, b.name, f.since;
+    """
+)
+print(response.get_as_arrow())
+```
+
+```bash
+pyarrow.Table
+a.name: string
+b.name: string
+f.since: int64
+----
+a.name: [["Adam","Adam","Karissa","Zhang"]]
+b.name: [["Karissa","Zhang","Zhang","Noura"]]
+f.since: [[2020,2020,2021,2022]]
+```
+
+</TabItem>
+
+<TabItem label="Node.js">
+
+```js
+// main.js
+const lbug = require("lbug");
+
+(async () => {
+  // Create an empty on-disk database and connect to it
+  const db = new lb.Database("example.lbdb");
+  const conn = new lb.Connection(db);
+
+  // Create the tables
+  await conn.query("CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)");
+  await conn.query("CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)");
+  await conn.query("CREATE REL TABLE Follows(FROM User TO User, since INT64)");
+  await conn.query("CREATE REL TABLE LivesIn(FROM User TO City)");
+
+  // Load the data
+  await conn.query('COPY User FROM "./data/user.csv"');
+  await conn.query('COPY City FROM "./data/city.csv"');
+  await conn.query('COPY Follows FROM "./data/follows.csv"');
+  await conn.query('COPY LivesIn FROM "./data/lives-in.csv"');
+
+  const queryResult = await conn.query("MATCH (a:User)-[f:Follows]->(b:User) RETURN a.name, f.since, b.name;");
+
+  // Get all rows from the query result
+  const rows = await queryResult.getAll();
+
+  // Print the rows
+  for (const row of rows) {
+    console.log(row);
+  }
+})();
+```
+
+```json
+{ "a.name": "Adam", "f.since": 2020, "b.name": "Karissa" }
+{ "a.name": "Adam", "f.since": 2020, "b.name": "Zhang" }
+{ "a.name": "Karissa", "f.since": 2021, "b.name": "Zhang" }
+{ "a.name": "Zhang", "f.since": 2022, "b.name": "Noura" }
+```
+
+</TabItem>
+
+<TabItem label="Java">
+
+Ladybug's Java client library is available on [Maven Central](https://central.sonatype.com/artifact/com.ladybugdb/lbug). You can add the following snippet to your `pom.xml` to get it installed:
+
+<Code code={CODE_BLOCKS.java.maven} lang="xml"/>
+
+Alternatively, if you are using Gradle, you can add the following snippet to your build.gradle file to include Ladybug's Java client library:
+
+For Groovy DSL:
+<Code code={CODE_BLOCKS.java.groovy} lang="groovy"/>
+
+For Kotlin DSL:
+<Code code={CODE_BLOCKS.java.kotlin} lang="kotlin"/>
+
+Below is an example Gradle project structure for a simple Java application that creates a graph schema and inserts
+data into the database for the given example.
+
+```
+├── build.gradle
+├── src/main
+│   ├── java
+│   │   └── Main.java
+│   └── resources
+│   │   └── user.csv
+│   │   └── city.csv
+│   │   └── follows.csv
+│   │   └── lives-in.csv
+```
+
+The minimal `build.gradle` contains the following configurations:
+<Code code={CODE_BLOCKS.java.gradle} lang="groovy"/>
+
+The `Main.java` contains the following code:
+
+```java
+// Main.java
+import com.ladybugdb.*;
+
+public class Main {
+    public static void main(String[] args) throws ObjectRefDestroyedException {
+        // Create an empty on-disk database and connect to it
+        Database db = new Database("example.lbdb");
+        Connection conn = new Connection(db);
+        // Create tables.
+        conn.query("CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)");
+        conn.query("CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)");
+        conn.query("CREATE REL TABLE Follows(FROM User TO User, since INT64)");
+        conn.query("CREATE REL TABLE LivesIn(FROM User TO City)");
+        // Load data.
+        conn.query("COPY User FROM 'src/main/resources/user.csv'");
+        conn.query("COPY City FROM 'src/main/resources/city.csv'");
+        conn.query("COPY Follows FROM 'src/main/resources/follows.csv'");
+        conn.query("COPY LivesIn FROM 'src/main/resources/lives-in.csv'");
+
+        // Execute a simple query.
+        QueryResult result =
+                conn.query("MATCH (a:User)-[f:Follows]->(b:User) RETURN a.name, f.since, b.name;");
+        while (result.hasNext()) {
+            FlatTuple row = result.getNext();
+            System.out.print(row);
+        }
+    }
+}
+```
+
+To execute the example, navigate to the project root directory and run the following command:
+
+```bash
+gradle run
+```
+
+```
+Adam|2020|Karissa
+Adam|2020|Zhang
+Karissa|2021|Zhang
+Zhang|2022|Noura
+```
+
+
+</TabItem>
+
+<TabItem label="Rust">
+
+When installing the `lbug` crate via Cargo, it will by default build and statically link Ladybug's C++
+library from source. You can also link against the dynamic release libraries (see the Rust
+[crate docs](https://docs.rs/lbug/latest/lbug/) for details).
+
+The `main.rs` file contains the following code:
+
+```rust
+// main.rs
+use lbug::{Connection, Database, Error, SystemConfig};
+
+fn main() -> Result<(), Error> {
+    // Create an empty on-disk database and connect to it
+    let db = Database::new("example.lbdb", SystemConfig::default())?;
+    let conn = Connection::new(&db)?;
+
+    // Create the tables
+    conn.query("CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)")?;
+    conn.query("CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)")?;
+    conn.query("CREATE REL TABLE Follows(FROM User TO User, since INT64)")?;
+    conn.query("CREATE REL TABLE LivesIn(FROM User TO City)")?;
+
+    // Load the data
+    conn.query("COPY User FROM './data/user.csv'")?;
+    conn.query("COPY City FROM './data/city.csv'")?;
+    conn.query("COPY Follows FROM './data/follows.csv'")?;
+    conn.query("COPY LivesIn FROM './data/lives-in.csv'")?;
+
+    let query_result =
+        conn.query("MATCH (a:User)-[f:Follows]->(b:User) RETURN a.name, f.since, b.name;")?;
+
+    // Print the rows
+    for row in query_result {
+        println!("{}, {}, {}", row[0], row[1], row[2]);
+    }
+    Ok(())
+}
+```
+
+```bash
+Adam, 2020, Karissa
+Adam, 2020, Zhang
+Karissa, 2021, Zhang
+Zhang, 2022, Noura
+```
+
+</TabItem>
+
+<TabItem label="Go">
+
+
+
+```go
+// main.go
+package main
+
+import (
+    "fmt"
+
+    "github.com/LadybugDB/go-ladybug"
+)
+
+func main() {
+    // Create an empty on-disk database and connect to it
+    systemConfig := lb.DefaultSystemConfig()
+    systemConfig.BufferPoolSize = 1024 * 1024 * 1024
+    db, err := lb.OpenDatabase("example.lbdb", systemConfig)
+    if err != nil {
+        panic(err)
+    }
+    defer db.Close()
+
+    conn, err := lb.OpenConnection(db)
+    if err != nil {
+        panic(err)
+    }
+    defer conn.Close()
+
+    // Create schema
+    queries := []string{
+        "CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)",
+        "CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)",
+        "CREATE REL TABLE Follows(FROM User TO User, since INT64)",
+        "CREATE REL TABLE LivesIn(FROM User TO City)",
+        "COPY User FROM \"./data/user.csv\"",
+        "COPY City FROM \"./data/city.csv\"",
+        "COPY Follows FROM \"./data/follows.csv\"",
+        "COPY LivesIn FROM \"./data/lives-in.csv\"",
+    }
+    for _, query := range queries {
+        queryResult, err := conn.Query(query)
+        if err != nil {
+            panic(err)
+        }
+        defer queryResult.Close()
+    }
+
+    // Execute Cypher query
+    query := "MATCH (a:User)-[e:Follows]->(b:User) RETURN a.name, e.since, b.name"
+    result, err := conn.Query(query)
+    if err != nil {
+        panic(err)
+    }
+    defer result.Close()
+    for result.HasNext() {
+        tuple, err := result.Next()
+        if err != nil {
+            panic(err)
+        }
+        defer tuple.Close()
+        // The result is a tuple, which can be converted to a slice.
+        slice, err := tuple.GetAsSlice()
+        if err != nil {
+            panic(err)
+        }
+        fmt.Println(slice)
+    }
+```
+
+```
+[Adam 2020 Karissa]
+[Adam 2020 Zhang]
+[Karissa 2021 Zhang]
+[Zhang 2022 Noura]
+```
+
+</TabItem>
+
+<TabItem label="Swift">
+
+Initialize a new project using the Swift package manager:
+
+```bash
+mkdir lbug-swift-example
+cd lbug-swift-example
+swift package init --type=executable
+```
+
+Update the `Package.swift` file:
+
+<Code code={CODE_BLOCKS.swift} lang="swift"/>
+
+This configuration sets the minimum deployment target and adds the `lbug-swift` client as a dependency.
+
+Next, replace the contents of `Sources/main.swift`:
+
+```swift
+import Ladybug
+
+// Create an empty on-disk database and connect to it
+let db = try! Database("example.lbdb")
+let conn = try! Connection(db)
+
+// Create schema and load data
+let queries = [
+    "CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)",
+    "CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)",
+    "CREATE REL TABLE Follows(FROM User TO User, since INT64)",
+    "CREATE REL TABLE LivesIn(FROM User TO City)",
+    "COPY User FROM 'data/user.csv'",
+    "COPY City FROM 'data/city.csv'",
+    "COPY Follows FROM 'data/follows.csv'",
+    "COPY LivesIn FROM 'data/lives-in.csv'",
+]
+
+for query in queries {
+    _ = try! conn.query(query)
+}
+
+// Execute Cypher query
+let res = try! conn.query("MATCH (a:User)-[e:Follows]->(b:User) RETURN a.name, e.since, b.name")
+for tuple in res {
+    let dict = try! tuple.getAsDictionary()
+    print(dict)
+}
+```
+
+Build the project:
+
+```bash
+swift build -c release
+```
+
+Copy the output executable so that it can access the `data` directory:
+
+```bash
+cp ./.build/arm64-apple-macosx/release/lbug-swift-example .
+```
+
+If you are using an Intel Mac or Linux, replace `arm64-apple-macosx` with your specific architecture.
+
+Finally, run the executable.
+
+```bash
+./lbug-swift-example
+```
+
+You should see the following output:
+
+```bash
+["b.name": Optional("Karissa"), "e.since": Optional(2020), "a.name": Optional("Adam")]
+["e.since": Optional(2020), "a.name": Optional("Adam"), "b.name": Optional("Zhang")]
+["b.name": Optional("Zhang"), "e.since": Optional(2021), "a.name": Optional("Karissa")]
+["e.since": Optional(2022), "a.name": Optional("Zhang"), "b.name": Optional("Noura")]
+```
+
+</TabItem>
+
+<TabItem label="C++">
+
+The Ladybug C++ client is distributed as `so`/`dylib`/`dll+lib` library files along with a header file (`lb.hpp`).
+Once you've downloaded and extracted the C++ files into a directory, they are ready to use without
+any additional installation. You just need to specify the library and include file search paths.
+
+For example, organize the files and directories as follows:
+
+```bash
+├── include
+│   ├── lb.hpp
+│   └── ......
+├── lib
+│   ├── liblb.so / liblb.dylib / lbug_shared.dll + lbug_shared.lib
+│   └── ......
+├── data
+│   ├── city.csv
+│   ├── follows.csv
+│   ├── lives-in.csv
+│   └── user.csv
+├── main.cpp
+├── CMakeLists.txt
+```
+
+```cpp
+// main.cpp
+#include <iostream>
+
+#include "include/lb.hpp"
+
+using namespace lbug::main;
+using namespace std;
+
+unique_ptr<QueryResult> runQuery(const string_view &query, unique_ptr<Connection> &connection) {
+    auto results = connection->query(query);
+    if (!results->isSuccess()) {
+        throw std::runtime_error(results->getErrorMessage());
+    }
+    return results;
+}
+
+int main() {
+    // Remove example.lbdb
+    remove("example.lbdb");
+    remove("example.lb.wal");
+
+    // Create an empty on-disk database and connect to it
+    SystemConfig systemConfig;
+    auto database = make_unique<Database>("example.lbdb", systemConfig);
+    auto connection = make_unique<Connection>(database.get());
+
+    // Create the schema.
+    runQuery("CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)", connection);
+    runQuery("CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)", connection);
+    runQuery("CREATE REL TABLE Follows(FROM User TO User, since INT64)", connection);
+    runQuery("CREATE REL TABLE LivesIn(FROM User TO City)", connection);
+
+    // Load data.
+    runQuery("COPY User FROM 'data/user.csv'", connection);
+    runQuery("COPY City FROM 'data/city.csv'", connection);
+    runQuery("COPY Follows FROM 'data/follows.csv'", connection);
+    runQuery("COPY LivesIn FROM 'data/lives-in.csv'", connection);
+
+    // Execute a simple query.
+    auto result = runQuery("MATCH (a:User)-[f:Follows]->(b:User) RETURN a.name, f.since, b.name;", connection);
+
+    // Output query result.
+    while (result->hasNext()) {
+        auto row = result->getNext();
+        std::cout
+            << row->getValue(0)->getValue<string>() << " | "
+            << row->getValue(1)->getValue<int64_t>() << " | "
+            << row->getValue(2)->getValue<string>() << std::endl;
+    }
+    return 0;
+}
+```
+
+```cmake
+// CMakeLists.txt
+cmake_minimum_required(VERSION 3.15)
+project(lbug-cpp)
+
+set(CMAKE_CXX_STANDARD 20)
+
+if(MSVC)
+    # Required for M_PI on Windows
+    add_compile_definitions(_USE_MATH_DEFINES)
+    add_compile_definitions(NOMINMAX)
+    add_compile_definitions(SERD_STATIC)
+    # Non-english windows system may use other encodings other than utf-8 (e.g. Chinese use GBK).
+    add_compile_options("/utf-8")
+    # Enables support for custom hardware exception handling
+    add_compile_options("/EHa")
+    # Reduces the size of the static library by roughly 1/2
+    add_compile_options("/Zc:inline")
+    # Disable type conversion warnings
+    add_compile_options(/wd4244 /wd4267)
+    # Remove the default to avoid warnings
+    STRING(REPLACE "/EHsc" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    STRING(REPLACE "/EHs" "" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    # Store all libraries and binaries in the same directory so that lbug_shared.dll is found at runtime
+    set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/src")
+    set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/src")
+    # This is a workaround for regex stackoverflow issue on windows in gtest.
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /STACK:8388608")
+
+    string(REGEX REPLACE "/W[3|4]" "/w" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+    add_compile_options($<$<CONFIG:Release>:/W0>)
+else()
+    add_compile_options(-Wall -Wextra)
+    # Disable warnings for unknown pragmas, which is used by several third-party libraries
+    add_compile_options(-Wno-unknown-pragmas)
+endif()
+
+add_executable(lbug-cpp main.cpp)
+
+# Find and link lbug library
+find_library(LBUG_LIB lbug PATHS ${CMAKE_SOURCE_DIR}/lib REQUIRED)
+target_link_libraries(lbug-cpp PRIVATE ${LBUG_LIB})
+target_include_directories(lbug-cpp PRIVATE ${CMAKE_SOURCE_DIR}/include)
+```
+
+Compile and run `main.cpp`:
+
+```bash
+cmake -S . -B build
+cmake --build build
+./build/lbug-cpp
+```
+
+```
+Adam | 2020 | Karissa
+Adam | 2020 | Zhang
+Karissa | 2021 | Zhang
+Zhang | 2022 | Noura
+```
+
+</TabItem>
+
+<TabItem label="C">
+
+The Ladybug C API shares the same `so`/`dylib` library files with the C++ API and can be used by
+including the C header file (`lb.h`).
+
+In this example, we assume that the `so`/`dylib`, the header file, the CSV files, and the C code file
+are all under the same directory:
+
+```bash
+├── include
+│   ├── lb.h
+│   └── ......
+├── liblb.so / liblb.dylib
+├── main.c
+├── user.csv
+├── city.csv
+├── follows.csv
+└── lives-in.csv
+```
+
+The file `main.c` contains the following code:
+
+```c
+// main.c
+#include <stdio.h>
+
+#include "include/lb.h"
+
+int main()
+{
+    // Create an empty on-disk database and connect to it
+    lbug_database db;
+    lbug_database_init("example.lbdb", lbug_default_system_config(), &db);
+
+    // Connect to the database.
+    lbug_connection conn;
+    lbug_connection_init(&db, &conn);
+
+    // Create the schema.
+    lbug_query_result result;
+    lbug_connection_query(&conn, "CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)", &result);
+    lbug_query_result_destroy(&result);
+    lbug_connection_query(&conn, "CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)", &result);
+    lbug_query_result_destroy(&result);
+    lbug_connection_query(&conn, "CREATE REL TABLE Follows(FROM User TO User, since INT64)", &result);
+    lbug_query_result_destroy(&result);
+    lbug_connection_query(&conn, "CREATE REL TABLE LivesIn(FROM User TO City)", &result);
+    lbug_query_result_destroy(&result);
+
+    // Load data.
+    lbug_connection_query(&conn, "COPY User FROM \"user.csv\"", &result);
+    lbug_query_result_destroy(&result);
+    lbug_connection_query(&conn, "COPY City FROM \"city.csv\"", &result);
+    lbug_query_result_destroy(&result);
+    lbug_connection_query(&conn, "COPY Follows FROM \"follows.csv\"", &result);
+    lbug_query_result_destroy(&result);
+    lbug_connection_query(&conn, "COPY LivesIn FROM \"lives-in.csv\"", &result);
+    lbug_query_result_destroy(&result);
+
+    // Execute a simple query.
+    lbug_connection_query(&conn, "MATCH (a:User)-[f:Follows]->(b:User) RETURN a.name, f.since, b.name;", &result);
+
+    // Output query result.
+    lbug_flat_tuple tuple;
+    lbug_value value;
+    while (lbug_query_result_has_next(&result))
+    {
+        lbug_query_result_get_next(&result, &tuple);
+
+        lbug_flat_tuple_get_value(&tuple, 0, &value);
+        char *name = NULL;
+        lbug_value_get_string(&value, &name);
+        lbug_value_destroy(&value);
+
+        lbug_flat_tuple_get_value(&tuple, 1, &value);
+        int64_t since = 0;
+        lbug_value_get_int64(&value, &since);
+        lbug_value_destroy(&value);
+
+        lbug_flat_tuple_get_value(&tuple, 2, &value);
+        char *name2 = NULL;
+        lbug_value_get_string(&value, &name2);
+        lbug_value_destroy(&value);
+
+
+        printf("%s follows %s since %lld \n", name, name2, since);
+        free(name);
+        free(name2);
+    }
+    lbug_value_destroy(&value);
+    lbug_flat_tuple_destroy(&tuple);
+    lbug_query_result_destroy(&result);
+    lbug_connection_destroy(&conn);
+    lbug_database_destroy(&db);
+    return 0;
+}
+```
+
+Compile and run `main.c`: Since we did not install the liblbug as a system library, we need to
+override the linker search path to correctly compile the C code and run the compiled program.
+
+On Linux:
+
+```bash
+env LIBRARY_PATH=. LD_LIBRARY_PATH=. gcc main.c -llbug
+env LIBRARY_PATH=. LD_LIBRARY_PATH=. ./a.out
+```
+
+On macOS:
+
+```bash
+env DYLD_LIBRARY_PATH=. LIBRARY_PATH=. clang main.c -llbug
+env DYLD_LIBRARY_PATH=. LIBRARY_PATH=. ./a.out
+```
+
+On Windows, the library file is passed to the compiler directly and the current directory is used
+automatically when searching for `lbug_shared.dll` at runtime:
+
+```cmd
+cl main.c lbug_shared.lib
+./main.exe
+```
+
+```bash
+Adam follows Karissa since 2020
+Adam follows Zhang since 2020
+Karissa follows Zhang since 2021
+Zhang follows Noura since 2022
+```
+
+</TabItem>
+
+<TabItem label="Shell">
+
+When using the Ladybug CLI's shell, you can create an on-disk database by specifying a path after
+the `lbug` command in the terminal.
+
+```bash
+lbug example.lbdb
+```
+```
+Opened the database example.lbdb in read-write mode.
+Enter ":help" for usage hints.
+lbug>
+```
+
+:::note[In-memory database]
+You can create an in-memory database by omitting the path entirely, and just calling `lbug`.
+This will create a database in memory that will be lost when the process finishes.
+```
+Opened the database under in-memory mode.
+Enter ":help" for usage hints.
+lbug>
+```
+:::
+
+Proceed to enter the following Cypher statements separated by semicolons. Note that you _must_
+indicate the end of each query statement with a semicolon in the shell, otherwise it will not be parsed
+correctly and fail to execute.
+
+```cypher
+// Create schema
+CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64);
+CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64);
+CREATE REL TABLE Follows(FROM User TO User, since INT64);
+CREATE REL TABLE LivesIn(FROM User TO City);
+
+// Insert data
+COPY User FROM "./data/user.csv";
+COPY City FROM "./data/city.csv";
+COPY Follows FROM "./data/follows.csv";
+COPY LivesIn FROM "./data/lives-in.csv";
+
+// Execute Cypher query
+MATCH (a:User)-[f:Follows]->(b:User)
+RETURN a.name, b.name, f.since;
+```
+
+The following result is obtained:
+
+```table
+┌─────────┬─────────┬─────────┐
+│ a.name  │ b.name  │ f.since │
+│ STRING  │ STRING  │ INT64   │
+├─────────┼─────────┼─────────┤
+│ Adam    │ Karissa │ 2020    │
+│ Adam    │ Zhang   │ 2020    │
+│ Karissa │ Zhang   │ 2021    │
+│ Zhang   │ Noura   │ 2022    │
+└─────────┴─────────┴─────────┘
+```
+
+</TabItem>
+
+</Tabs>
+
+---
+
+:::tip[Congratulations]
+You've now created and queried your first graph in Ladybug!
+:::
+
+</div>

@@ -1,0 +1,95 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/algo/wcc.mdx
+title: "Wcc"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+Weak connectivity is a notion defined on undirected graphs. The weakly connected components (WCC) of an
+undirected graph is the maximal subgraph where any two vertices are connected to each other by some
+path. In Ladybug, both base and projected graphs are directed. Weak connectivity of directed graphs is
+defined as the WCC of the corresponding undirected version, i.e., each edge is treated as undirected.
+
+Ladybug implements a parallelized version of the WCC algorithm based on [Ligra](https://jshun.github.io/ligra/docs/examples.html).
+
+## Syntax
+
+```cypher
+CALL weakly_connected_components(
+    <GRAPH_NAME>,
+    maxIterations := 100
+)
+RETURN node, group_id;
+```
+
+**Alias**: `wcc`
+
+Required arguments:
+
+- `GRAPH_NAME`: Name of the projected graph to run the algorithm on
+    - Type: `STRING`
+
+Optional arguments:
+
+- `maxIterations`: Maximum number of iterations to run
+    - Type: `INT64`
+    - Default: `100`
+
+Returns:
+
+- `node`: A node object
+- `group_id`: The ID of the WCC that the node belongs to
+
+:::note[Note]
+`group_id` is assigned based on Ladybug's internal node offsets. Currently there is no way to assign `group_id` based on node properties.
+:::
+
+## Example
+
+Create the node and relationship tables:
+```cypher
+CREATE NODE TABLE Person(name STRING PRIMARY KEY);
+CREATE REL TABLE KNOWS(FROM Person to Person);
+```
+Insert nodes and edges:
+```cypher
+CREATE (u0:Person {name: 'Alice'}),
+        (u1:Person {name: 'Bob'}),
+        (u2:Person {name: 'Charlie'}),
+        (u3:Person {name: 'Derek'}),
+        (u4:Person {name: 'Eve'}),
+        (u5:Person {name: 'Frank'}),
+        (u6:Person {name: 'George'}),
+        (u7:Person {name: 'Hina'}),
+        (u8:Person {name: 'Ira'}),
+        (u0)-[:KNOWS]->(u1),
+        (u1)-[:KNOWS]->(u2),
+        (u5)-[:KNOWS]->(u4),
+        (u6)-[:KNOWS]->(u4),
+        (u6)-[:KNOWS]->(u5),
+        (u6)-[:KNOWS]->(u7),
+        (u7)-[:KNOWS]->(u4),
+        (u6)-[:KNOWS]->(u5);
+```
+Create a projected graph from the node and relationship tables:
+```cypher
+CALL project_graph('Graph', ['Person'], ['KNOWS']);
+```
+Run WCC on the projected graph:
+```cypher
+CALL weakly_connected_components('Graph')
+RETURN group_id, collect(node.name)
+ORDER BY group_id;
+```
+```table
+┌──────────┬─────────────────────────┐
+│ group_id │ COLLECT(node.name)      │
+│ INT64    │ STRING[]                │
+├──────────┼─────────────────────────┤
+│ 0        │ [Derek]                 │
+│ 1        │ [Ira]                   │
+│ 2        │ [Bob,Charlie,Alice]     │
+│ 5        │ [George,Frank,Hina,Eve] │
+└──────────┴─────────────────────────┘
+```

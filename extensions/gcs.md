@@ -1,0 +1,93 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/extensions/gcs.mdx
+title: "Gcs"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+You can read, write, or glob files hosted on object storage servers using the
+[Google Cloud Storage](https://cloud.google.com/storage) API.
+
+## Usage
+
+Accessing GCS storage is implemented as a feature of the `httpfs` extension.
+
+Please see [Install an extension](index.md#install-an-extension) and [Load an extension](index.md#load-an-extension) first before getting started.
+
+### Configure the connection
+
+Before reading and writing from private GCS buckets, you have to configure the connection using [CALL](../cypher/configuration.md) statements.
+```cypher
+CALL <option_name>=<option_value>
+```
+
+The following options are supported:
+
+| Option | Description |
+|----------|----------|
+| `gcs_access_key_id` | GCS access key ID |
+| `gcs_secret_access_key` | GCS secret access key |
+
+Alternatively, you can set the following environment variables:
+
+| Environment variable | Description |
+|----------|----------|
+| `GCS_ACCESS_KEY_ID` | GCS access key ID |
+| `GCS_SECRET_ACCESS_KEY` | GCS secret access key |
+
+Since Ladybug communicates with GCS using its [interoperability mode](https://cloud.google.com/storage/docs/aws-simple-migration),
+the following S3 settings also apply when uploading files to GCS. For more detailed descriptions of these settings,
+see the documentation for the [S3 extension](s3.md).
+
+| Option name |
+|----------|
+| `s3_uploader_max_num_parts_per_file` |
+| `s3_uploader_max_filesize` |
+| `s3_uploader_threads_limit` |
+
+### Scan data from GCS
+
+Files in GCS can be accessed through URLs with the formats
+
+- `gs://⟨gcs_bucket⟩/⟨path_to_file_in_bucket⟩`
+- `gcs://⟨gcs_bucket⟩/⟨path_to_file_in_bucket⟩`
+
+For example, if you wish to scan the file `follows.parquet` located in the root directory of bucket `lbug-datasets` you could use the following query:
+
+```cypher
+LOAD FROM 'gs://lbug-datasets/follows.parquet'
+RETURN *;
+```
+
+### Glob data from GCS
+
+You can glob data from GCS just as you would from a local file system.
+
+For example, the following query will copy the contents of all files matching the pattern `vPerson*.csv` into the table `person`:
+
+```cypher
+COPY person FROM "gs://tinysnb/vPerson*.csv"(header=true);
+```
+
+### Write data to GCS
+
+You can also write to files in GCS using URLs in the formats
+- `gs://⟨gcs_bucket⟩/⟨path_to_file_in_bucket⟩`
+- `gcs://⟨gcs_bucket⟩/⟨path_to_file_in_bucket⟩`
+
+For example, the following query will write to the file located at path `saved/location.parquet` in the bucket `lbug-datasets`:
+
+```cypher
+COPY (
+    MATCH (p:Location)
+    RETURN p.*
+)
+TO 'gcs://lbug-datasets/saved/location.parquet';
+```
+
+## Local cache
+
+Scanning the same file multiple times can be slow and redundant.
+To avoid this, you can locally cache remote files to improve performance for repeated scans.
+See the [local cache](httpfs.md#local-cache) section for more details.

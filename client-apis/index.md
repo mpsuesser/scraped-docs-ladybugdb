@@ -1,0 +1,80 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/client-apis/index.mdx
+title: "Index"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+import { LinkCard, CardGrid} from '@astrojs/starlight/components';
+
+Ladybug is embeddable in a variety of languages via client library APIs. Queries in Ladybug through
+its CLI or client APIs are transactional, satisfying serializability, atomicity and durability requirements.
+
+## Command line shell
+
+The Ladybug CLI shell is a means to interact with a Ladybug database from the command line with zero dependencies.
+See the card below for detailed information on how to use the CLI.
+
+<LinkCard
+  title="Command Line"
+  href="/client-apis/cli"
+/>
+
+## Official client APIs
+
+The following client libraries are officially supported.
+
+<CardGrid>
+  <LinkCard
+    title="Python"
+    href="/client-apis/python"
+  />
+  <LinkCard
+    title="Node.js"
+    href="/client-apis/nodejs"
+  />
+  <LinkCard
+    title="Java"
+    href="/client-apis/java"
+  />
+  <LinkCard
+    title="Rust"
+    href="/client-apis/rust"
+  />
+  <LinkCard
+    title="Go"
+    href="/client-apis/go"
+  />
+  <LinkCard
+    title="Swift"
+    href="/client-apis/swift"
+  />
+  <LinkCard
+    title="C"
+    href="/client-apis/c"
+  />
+  <LinkCard
+    title="C++"
+    href="/client-apis/cpp"
+  />
+</CardGrid>
+
+
+## Community-contributed clients
+
+Community members and users are welcome to contribute client libraries for languages that are not yet
+supported. The following client libraries have been contributed by the community.
+
+<CardGrid>
+  <LinkCard
+    title="Ruby"
+    href="/client-apis/ruby"
+  />
+
+  <LinkCard
+    title="Nim"
+    href="/client-apis/nim"
+  />
+
+</CardGrid>

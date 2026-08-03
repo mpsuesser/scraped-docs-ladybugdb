@@ -1,0 +1,146 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/client-apis/nodejs.mdx
+title: "Nodejs"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+See the following link for the full documentation of the Node.js API.
+
+<LinkCard
+  title="Node.js API documentation"
+  href="https://api-docs.ladybugdb.com/nodejs"
+/>
+
+## Sync and Async APIs
+
+Ladybug provides both a sync and an async Node.js API. The async API is the default
+and is more commonly used when building Ladybug applications in Node.js.
+
+<Tabs syncKey="sync">
+
+<TabItem label="Async API">
+
+The asynchronous API is commonly used when writing Ladybug applications in Node.js.
+
+```js
+const lbug = require("@ladybugdb/core");
+
+(async () => {
+  // Create an empty on-disk database and connect to it
+  const db = new lbug.Database("example.lbdb");
+  const conn = new lbug.Connection(db);
+
+  // Create the tables
+  await conn.query("CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)");
+  await conn.query("CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)");
+  await conn.query("CREATE REL TABLE Follows(FROM User TO User, since INT64)");
+  await conn.query("CREATE REL TABLE LivesIn(FROM User TO City)");
+
+  // Load the data
+  await conn.query('COPY User FROM "./data/user.csv"');
+  await conn.query('COPY City FROM "./data/city.csv"');
+  await conn.query('COPY Follows FROM "./data/follows.csv"');
+  await conn.query('COPY LivesIn FROM "./data/lives-in.csv"');
+
+  const queryResult = await conn.query("MATCH (a:User)-[f:Follows]->(b:User) RETURN a.name, f.since, b.name;");
+
+  // Get all rows from the query result
+  const rows = await queryResult.getAll();
+
+  // Print the rows
+  for (const row of rows) {
+    console.log(row);
+  }
+})();
+```
+
+</TabItem>
+
+<TabItem label="Sync API">
+
+In addition to the standard async Node.js API, Ladybug also provides a synchronous Node.js API.
+This is useful for running Ladybug in a synchronous context, such as debugging or applications
+where async operations are not desired.
+
+```js
+const lbug = require("@ladybugdb/core");
+
+// Create an empty on-disk database and connect to it
+const db = new lbug.Database("example.lbdb");
+const conn = new lbug.Connection(db);
+
+// Create the tables
+conn.querySync("CREATE NODE TABLE User(name STRING PRIMARY KEY, age INT64)");
+conn.querySync("CREATE NODE TABLE City(name STRING PRIMARY KEY, population INT64)");
+conn.querySync("CREATE REL TABLE Follows(FROM User TO User, since INT64)");
+conn.querySync("CREATE REL TABLE LivesIn(FROM User TO City)");
+
+// Load the data
+conn.querySync('COPY User FROM "./data/user.csv"');
+conn.querySync('COPY City FROM "./data/city.csv"');
+conn.querySync('COPY Follows FROM "./data/follows.csv"');
+conn.querySync('COPY LivesIn FROM "./data/lives-in.csv"');
+
+const queryResult = conn.querySync(
+    """
+    MATCH (a:User)-[f:Follows]->(b:User)
+    RETURN a.name, f.since, b.name;
+    """
+);
+
+// Get all rows from the query result
+const rows = queryResult.getAllSync();
+
+// Print the rows
+for (const row of rows) {
+  console.log(row);
+}
+```
+
+</TabItem>
+
+</Tabs>
+
+See the [Node.js API documentation](https://api-docs.ladybugdb.com/nodejs) for more details
+on the methods available in the sync and async APIs.
+
+## Run multiple queries in one execution
+
+Similarly, in the Node.js API, you can execute multiple Cypher queries separated by semicolons in a single execution.
+The API will return a list of `QueryResult` objects.
+
+<Tabs syncKey="sync">
+
+<TabItem label="Async API">
+```js
+const results = await conn.query("RETURN 1; RETURN 2; RETURN 3");
+for (const result of results) {
+  const rows = await result.getAll();
+  console.log(rows);
+}
+```
+</TabItem>
+
+<TabItem label="Sync API">
+```js
+const resultsSync = conn.querySync("RETURN 1; RETURN 2; RETURN 3");
+for (const result of resultsSync) {
+  const rows = result.getAllSync();
+  console.log(rows);
+}
+```
+</TabItem>
+
+</Tabs>
+
+This will return:
+```
+[[1]]
+[[2]]
+[[3]]
+```

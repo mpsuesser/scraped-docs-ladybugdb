@@ -1,0 +1,139 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/client-apis/c.mdx
+title: "C"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+import {version} from '../../../version.json';
+import { Code } from 'astro-expressive-code/components';
+
+export const CMAKE_CONTENT =`cmake_minimum_required(VERSION 3.11)
+project(example LANGUAGES C)
+ExternalProject_Add(lbug-prebuilt
+    URL https://github.com/LadybugDB/ladybug/releases/download/v${version}/liblbug-linux-x86_64.tar.gz
+)
+ExternalProject_Get_Property(lbug-prebuilt SOURCE_DIR)
+add_library(lbug SHARED IMPORTED)
+add_dependencies(lbug lbug-prebuilt)
+set_target_properties(lbug PROPERTIES IMPORTED_LOCATION ${"${SOURCE_DIR}"}/liblbug.so)
+target_include_directories(lbug INTERFACE ${"${SOURCE_DIR}"})
+add_executable(example main.c)
+target_link_libraries(example lbug)`
+
+See the following link for the full documentation of the C library API.
+
+<LinkCard
+  title="C API documentation"
+  href="https://api-docs.ladybugdb.com/c/lbug_8h.html"
+/>
+
+## Linking
+
+### Using the pre-built library
+
+See [Installation](../installation.md) and [Get Started](../get-started/index.md) for simple manual instructions for building with the C library.
+
+Alternatively, here is an example configuration for integrating the pre-built library into a CMake project (substitute `URL` and `URL_HASH` and `liblbug.so` as appropriate for your platform).
+<Code code={CMAKE_CONTENT} lang="cmake"/>
+
+### Linking against Ladybug when built from source
+
+See the requirements in [developer guide](../developer-guide/index.md).
+It's recommended that you use CMake if you want to link to the lbug static library as shown in the example below.
+
+#### CMake
+
+The following example uses [FetchContent](https://cmake.org/cmake/help/latest/module/FetchContent.html) to download and build lbug as a dependency within a CMake project, and links it either statically or dynamically to an example executable (which can be configured with the `EXAMPLE_SHARED` option). See [Get Started](../get-started/index.md) for an example of `main.c`.
+```cmake
+cmake_minimum_required(VERSION 3.11)
+project(example LANGUAGES C CXX)
+set(BUILD_SHELL FALSE)
+include(FetchContent)
+FetchContent_Declare(lbug
+    URL https://github.com/LadybugDB/ladybug/archive/refs/tags/v0.5.0.zip
+    URL_HASH SHA256=47ff308079cbbfeccc38eeb1c5f455a8c00f9294034141b9084387518f0bbed9
+)
+FetchContent_MakeAvailable(lbug)
+add_executable(example main.c)
+option(EXAMPLE_SHARED "Use dynamic linking" TRUE)
+if (EXAMPLE_SHARED)
+  target_link_libraries(example lbug_shared)
+else()
+  target_link_libraries(example lbug)
+endif()
+```
+
+#### Other Build Systems
+
+Using other build systems with the dynamic library is still relatively simple as all you need to make use of is the dynamic library and lbug.h, both of which can be installed by CMake. E.g. your build system can run.
+```bash
+cmake -B build
+cmake --build build
+cmake --install build --prefix '<install-dest>'
+```
+And then link against `<install-dest>/liblbug.so` (or `liblbug.dylib`/`liblbug.lib` depending on your platform) and add `<install-dest>` to your include directories.
+
+
+The static library is more complicated (as noted above, it's recommended that you use CMake to handle the details) and is not installed by default, but all static libraries will be available in the build directory.
+You need to define `LBUG_STATIC_DEFINE`, and link against the static Ladybug library in `build/src`, as well as `antlr4_cypher`, `antlr4_runtime`, `brotlidec`, `brotlicommon`, `utf8proc`, `re2`, `serd`, `fastpfor`, `miniparquet`, `zstd`, `miniz`, `mbedtls`, `lz4` (all of which can be found in the third_party subdirectory of the CMake build directory. E.g. `build/third_party/zstd/libzstd.a`) and whichever standard library you're using.
+
+## Handling Ladybug output using `lbug_query_result_get_next()`
+
+For the examples in this section we will be using the following schema:
+```cypher
+CREATE NODE TABLE person(id INT64 PRIMARY KEY);
+```
+
+The `lbug_query_result_get_next()` function returns a reference to the resulting flat tuple. Additionally, to reduce resource allocation all calls to `lbug_query_result_get_next()` reuse the same
+flat tuple object. This means that for a query result, each call to `lbug_query_result_get_next()` actually overwrites the flat tuple previously returned by the previous call.
+
+Thus, we recommend processing each tuple immediately before making the next call to `getNext`:
+
+```c
+lbug_query_result result;
+lbug_connection_query(&conn, "MATCH (p:person) RETURN p.*", &result);
+while (lbug_query_result_has_next(&result)) {
+  lbug_flat_tuple tuple;
+  lbug_query_result_get_next(&result, &tuple);
+  do_something(tuple);
+}
+```
+
+If you wish to process the tuples later, you must explicitly make a copy of each tuple:
+```c
+static lbug_value* copy_flat_tuple(lbug_flat_tuple* tuple, uint32_t tupleLen) {
+  lbug_value* ret = malloc(sizeof(lbug_value) * tupleLen);
+  for (uint32_t i = 0; i < tupleLen; i++) {
+      lbug_flat_tuple_get_value(tuple, i, &ret[i]);
+  }
+  return ret;
+}
+
+void mainFunction() {
+  lbug_query_result result;
+  lbug_connection_query(&conn, "MATCH (p:person) RETURN p.*", &result);
+
+  uint64_t num_tuples = lbug_query_result_get_num_tuples(&result);
+  lbug_value** tuples = (lbug_value**)malloc(sizeof(lbug_value*) * num_tuples);
+  for (uint64_t i = 0; i < num_tuples; ++i) {
+      lbug_flat_tuple tuple;
+      lbug_query_result_get_next(&result, &tuple);
+      tuples[i] = copy_flat_tuple(&tuple, lbug_query_result_get_num_columns(&result));
+      lbug_flat_tuple_destroy(&tuple);
+  }
+
+  for (uint64_t i = 0; i < num_tuples; ++i) {
+    for (uint64_t j = 0; j < lbug_query_result_get_num_columns(&result); ++j) {
+      doSomething(tuples[i][j]);
+      lbug_value_destroy(&tuples[i][j]);
+    }
+    free(tuples[i]);
+  }
+
+  free((void*)tuples);
+  lbug_query_result_destroy(&result);
+}
+```

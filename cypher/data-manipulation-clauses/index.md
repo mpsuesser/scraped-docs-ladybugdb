@@ -1,0 +1,37 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/cypher/data-manipulation-clauses/index.mdx
+title: "Index"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+import { CardGrid, LinkCard } from '@astrojs/starlight/components';
+
+Ladybug's implementation of openCypher provides `CREATE`/`SET`/`DELETE` commands to manipulate the
+data in a database. As a general rule, these should be used to do small modifications to the database.
+For doing large bulk insertions, you should use the `COPY FROM` commands as far as possible.
+
+
+<CardGrid>
+  <LinkCard
+    title="CREATE"
+    href="/cypher/data-manipulation-clauses/create"
+  />
+  <LinkCard
+    title="MERGE"
+    href="/cypher/data-manipulation-clauses/merge"
+  />
+  <LinkCard
+    title="SET"
+    href="/cypher/data-manipulation-clauses/set"
+  />
+  <LinkCard
+    title="DELETE"
+    href="/cypher/data-manipulation-clauses/delete"
+  />
+  <LinkCard
+    title="RETURN after update"
+    href="/cypher/data-manipulation-clauses/read-after-update"
+  />
+</CardGrid>

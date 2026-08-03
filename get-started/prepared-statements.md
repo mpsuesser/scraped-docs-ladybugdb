@@ -1,0 +1,209 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/get-started/prepared-statements.mdx
+title: "Prepared Statements"
+description: ""
+access_date: 2026-08-03T17:27:27.470Z
+current_date: 2026-08-03T17:27:27.470Z
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+Similar to [SQL injection](https://en.wikipedia.org/wiki/SQL_injection) in relational databases,
+it is possible to have Cypher injection in graph databases. This is when a malicious input can manipulate
+dynamically generated Cypher queries to execute arbitrary code.
+To avoid such security issues, it is generally a good practice to provide parameters to your Cypher queries instead of
+using concatenated string queries.
+
+This section shows how to run *prepared* Cypher statements with parameters.
+
+## Why use parameters?
+
+Consider a scenario where you want to retrieve all persons in a database who are older than a certain age.
+Instead of recreating the Cypher query with a hardcoded age value, it is more efficient to pass the age as a parameter
+to the query, so that the same query can be reused for different values.
+
+## Syntax
+
+Parameterized variables in Cypher are marked using the `$` symbol.
+
+<Tabs syncKey="prepared-statements">
+
+<TabItem label="Python">
+
+The query below searches for persons who are between a minimum and maximum age.
+The example Python code shows how to specify the parameters as a dictionary in the `parameters`
+argument of the `execute` method.
+
+#### ✅ Recommended
+
+The `$min_age` and `$max_age` variables in the Cypher query are mapped to the `min_age` and `max_age`
+keys in the `parameters` dictionary.
+
+```py
+min_age = 18
+max_age = 30
+
+conn.execute(
+    """
+    MATCH (p:Person)
+    WHERE p.age > $min_age AND p.age < $max_age
+    RETURN p.name;
+    """,
+    parameters={"min_age": min_age, "max_age": max_age}
+)
+```
+
+#### ❌ Not recommended
+
+Although it is possible to pass the `min_age` and `max_age` variables directly into the query as
+string literals, this is **strongly** discouraged.
+
+```py
+min_age = 18
+max_age = 30
+
+conn.execute(
+    f"""
+    MATCH (p:Person)
+    WHERE p.age > {min_age} AND p.age < {max_age}
+    RETURN p.name;
+    """
+)
+```
+</TabItem>
+
+<TabItem label="C++">
+
+```cpp
+// main.cpp
+#include <cassert>
+#include <iostream>
+#include <ranges>
+
+#include "lbug.hpp"
+
+using namespace lbug::main;
+using namespace std;
+
+unique_ptr<QueryResult> runQuery(const string_view &query, unique_ptr<Connection> &connection) {
+    auto results = connection->query(query);
+    if (!results->isSuccess()) {
+        throw std::runtime_error(results->getErrorMessage());
+    }
+    return results;
+}
+
+unique_ptr<QueryResult>
+runPreparedQuery(const string_view &query,
+                 std::unordered_map<std::string, std::unique_ptr<lbug::common::Value>> inputParams,
+                 const unique_ptr<Connection> &connection) {
+    auto prepared_stmt = connection->prepare(query);
+    if (!prepared_stmt->isSuccess()) {
+        throw std::runtime_error(prepared_stmt->getErrorMessage());
+    }
+
+    auto results = connection->executeWithParams(prepared_stmt.get(), std::move(inputParams));
+    if (!results->isSuccess()) {
+        throw std::runtime_error(results->getErrorMessage());
+    }
+
+    return results;
+}
+
+int main() {
+    // Remove example.lbdb
+    remove("example.lbdb");
+    remove("example.lbdb.wal");
+
+    // Create an empty on-disk database and connect to it
+    SystemConfig systemConfig;
+    auto database = make_unique<Database>("example.lbdb", systemConfig);
+    auto connection = make_unique<Connection>(database.get());
+
+    // Create the schema.
+    runQuery("CREATE NODE TABLE N(id SERIAL PRIMARY KEY, name STRING, age INT64, embedding FLOAT[])", connection);
+
+    // Create a node.
+    runQuery("CREATE (:N {name: 'Alice', embedding: [10.0, 20.0, 30.0], age: 25});", connection);
+
+    std::unordered_map<std::string, unique_ptr<lbug::common::Value>> args;
+
+    // `name` parameter.
+    args.emplace("name", make_unique<lbug::common::Value>("Bob"));
+
+    // `age` parameter.
+    uint64_t age = 30;
+    args.emplace("age", make_unique<lbug::common::Value>(age));
+
+    // `embedding` parameter.
+    auto type = lbug::common::LogicalType::LIST(lbug::common::LogicalType::FLOAT());
+    vector<unique_ptr<lbug::common::Value>> data;
+    data.push_back(make_unique<lbug::common::Value>((float)40.0));
+    data.push_back(make_unique<lbug::common::Value>((float)50.1));
+    data.push_back(make_unique<lbug::common::Value>((float)60.0));
+    args.emplace("embedding", make_unique<lbug::common::Value>(std::move(type), std::move(data)));
+
+    // Create a node using parameters.
+    runPreparedQuery("CREATE (:N {name: $name, age: $age, embedding: $embedding});", std::move(args), connection);
+
+    // Execute a match query.
+    auto result = runQuery("MATCH (n) RETURN n.name, n.age, n.embedding;", connection);
+
+    // Print the column names.
+    auto columns = result->getColumnNames();
+    for (auto i = 0u; i < columns.size(); ++i) {
+        if (i != 0) {
+            cout << " | ";
+        }
+        cout << columns[i];
+    }
+    cout << "\n";
+
+    // Print the rows.
+    while (result->hasNext()) {
+        auto row = result->getNext();
+
+        // Print `name`.
+        auto value_name = row->getValue(0);
+        KU_ASSERT_UNCONDITIONAL(value_name->getDataType().getLogicalTypeID() == lbug::common::LogicalTypeID::STRING);
+        cout << value_name->getValue<string>() << " | ";
+
+        // Print `age`.
+        auto value_int64 = row->getValue(1);
+        KU_ASSERT_UNCONDITIONAL(value_int64->getDataType().getLogicalTypeID() == lbug::common::LogicalTypeID::INT64);
+        cout << value_int64->getValue<int64_t>() << " | ";
+
+        // Print `embedding`.
+        auto value_embedding = row->getValue(2);
+        KU_ASSERT_UNCONDITIONAL(value_embedding->getDataType().getLogicalTypeID() == lbug::common::LogicalTypeID::LIST);
+        auto length = value_embedding->getChildrenSize();
+        vector<float> embedding;
+        for (auto i = 0u; i < length; ++i) {
+            auto element = lbug::common::NestedVal::getChildVal(value_embedding, i);
+            KU_ASSERT_UNCONDITIONAL(element->getDataType().getLogicalTypeID() == lbug::common::LogicalTypeID::FLOAT);
+            embedding.push_back(element->getValue<float>());
+        }
+        auto join = [](const std::vector<float>& vec, const std::string& sep) {
+            std::ostringstream oss;
+            for (size_t i = 0; i < vec.size(); i++) {
+                if (i > 0) oss << sep;
+                oss << vec[i];
+            }
+            return oss.str();
+        };
+        cout << "[" << join(embedding, ", ") << "]\n";
+    }
+    return 0;
+}
+```
+```
+n.name | n.age | n.embedding
+Alice | 25 | [10, 20, 30]
+Bob | 30 | [40, 50.1, 60]
+```
+See the C++ example on the [getting started](index.md) page for
+instructions on how to compile and run the code.
+
+</TabItem>
+
+</Tabs>
