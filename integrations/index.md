@@ -1,0 +1,23 @@
+---
+url: https://raw.githubusercontent.com/LadybugDB/ladybug-docs/main/src/content/docs/integrations/index.mdx
+title: "Integrations"
+description: "Run Ladybug inside other platforms — Snowflake Native App and PostgreSQL extension."
+access_date: 2026-09-15T18:50:57.633Z
+current_date: 2026-09-15T18:50:57.633Z
+---
+
+Ladybug can run inside the platforms you already use, so you can query your existing
+data as a graph with Cypher without moving it elsewhere.
+
+## Available integrations
+
+| Integration | Description |
+|-------------|-------------|
+| [Snowflake](snowflake.md) | Run Ladybug as a Snowflake Native App and query Snowflake tables with Cypher. |
+| [PostgreSQL](postgres.md) | Run Cypher queries inside PostgreSQL with the `pg_ladybug` extension. |
+
+:::note[Note]
+These integrations are different from [attaching](../extensions/attach/rdbms.md) external
+databases to a standalone Ladybug instance. Here, Ladybug runs *inside* the host
+platform: queries execute against your Snowflake or PostgreSQL tables in place.
+:::
